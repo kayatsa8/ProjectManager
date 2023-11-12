@@ -45,3 +45,12 @@ class User:
 
     def getUsername(self) -> str:
         return self.__username
+    
+    def canDelete(self, password: str) -> bool:
+        if not self.__loggedIn:
+            return False
+        
+        if password is not self.__password:
+            return False
+        
+        return True

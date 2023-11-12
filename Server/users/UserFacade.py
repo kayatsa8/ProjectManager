@@ -68,3 +68,12 @@ class UserFacade:
             raise Exception("zno such user")
         
         return self.__users[username]
+    
+    def deleteUser(self, username: str, password: str) -> None:
+        if username not in self.__users:
+            raise Exception("No such user")
+        
+        if not self.__users[username].canDelete(password):
+            raise Exception("The user cannot be deleted right now, please try again to enter your password")
+        
+        self.__users.pop(username, None)
