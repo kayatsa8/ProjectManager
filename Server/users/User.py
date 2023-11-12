@@ -24,3 +24,21 @@ class User:
 
     def isLoggedIn(self) -> bool:
         return self.loggedIn
+    
+    def changeUsername(self, newUsername: str, password: str) -> None:
+        if not self.loggedIn:
+            raise Exception("The user is not logged-in")
+        
+        if password is not self.password:
+            raise Exception("The given password is not correct!")
+        
+        self.username = newUsername
+
+    def changePassword(self, oldPassword: str, newPassword: str) -> None:
+        if not self.loggedIn:
+            raise Exception("The user is not logged-in")
+        
+        if oldPassword is not self.password:
+            raise Exception("The given password is not correct!")
+        
+        self.password = newPassword
