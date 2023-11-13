@@ -9,7 +9,7 @@ class User:
         self.__password: str = password
         self.__loggedIn: bool = False
         self.__projects: Dict[str, Project] = dict()  # (projectName, Project)
-        # TODO: (?) add id
+        
 
     def logIn(self, password: str) -> None:
         if self.__loggedIn:
@@ -59,9 +59,14 @@ class User:
         
         return True
     
-    def getProject(self, projectName: str) -> Project:
+    ### projects
+
+    def __searchProjectException(self, projectName: str) -> None:
         if not projectName in self.__projects:
             raise Exception("The project does not exist")
+
+    def getProject(self, projectName: str) -> Project:
+        self.__searchProjectException(projectName)
         
         return self.__projects[projectName]
     
@@ -74,7 +79,38 @@ class User:
         self.__projects[name] = project
 
     def deleteProject(self, projectName: str) -> None:
-        if not projectName in self.__projects:
-            raise Exception("No such project")
+        self.__searchProjectException(projectName)
         
         self.__projects.pop(projectName, None)
+
+    def changeProjectName(self, projectName: str, newProjectName: str) -> None:
+        self.__searchProjectException(projectName)
+
+        if newProjectName in self.__projects:
+            raise Exception("A project with that name already exists")
+        
+        project: Project = self.__projects[projectName]
+        project.changeName(newProjectName)
+
+        self.__projects[newProjectName] = self.__projects.pop(projectName)
+
+    def changeProjectDescription(self, projectName: str, description: str) -> None:
+        self.__searchProjectException(projectName)
+
+        self.__projects[projectName].changeDescription(description)
+
+    def changeProjectLanguages(self, projectName: str, languages: List[str]) -> None:
+        self.__searchProjectException(projectName)
+
+        self.__projects[projectName].changeLanguages(languages)
+
+    def changeProjectTools(self, projectName: str, tools: List[str]) -> None:
+        self.__searchProjectException(projectName)
+
+        self.__projects[projectName].changeTools(tools)
+
+    def markProjectCompleteIncomplete(self, projectName: str) -> None:
+        self.__searchProjectException(projectName)
+
+        self.__projects[projectName].markCompleteIncomplete()
+
