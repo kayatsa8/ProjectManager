@@ -4,7 +4,7 @@ from users.User import User
 class Facade:
     
     def __init__(self) -> None:
-        self.__users: Dict[str, User] = dict()
+        self.__users: Dict[str, User] = dict()  # (username, User)
         self.__passwordLength: int = 4
 
     def register(self, username: str, password: str) -> None:

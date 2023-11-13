@@ -1,10 +1,14 @@
+from typing import Dict, List
+from Server.projects.Project import Project
+
+
 class User:
 
     def __init__(self, username: str, password: str) -> None:
         self.__username: str = username
         self.__password: str = password
         self.__loggedIn: bool = False
-        # TODO: a list of projects
+        self.__projects: Dict[str, Project] = dict()  # (projectName, Project)
         # TODO: (?) add id
 
     def logIn(self, password: str) -> None:
@@ -54,3 +58,23 @@ class User:
             return False
         
         return True
+    
+    def getProject(self, projectName: str) -> Project:
+        if not projectName in self.__projects:
+            raise Exception("The project does not exist")
+        
+        return self.__projects[projectName]
+    
+    def addProject(self, name: str, description: str, languages: List[str], tools: List[str]) -> None:
+        if name in self.__projects:
+            raise Exception("A project eith that name already exists")
+        
+        project: Project = Project(name, description, languages, tools)
+
+        self.__projects[name] = project
+
+    def deleteProject(self, projectName: str) -> None:
+        if not projectName in self.__projects:
+            raise Exception("No such project")
+        
+        self.__projects.pop(projectName, None)
