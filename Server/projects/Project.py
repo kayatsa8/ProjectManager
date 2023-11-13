@@ -10,3 +10,23 @@ class Project:
         self.__tools: List[str] = tools
         self.__completed: bool = False
         self.__completionDate: date = date.max
+
+    def getName(self) -> str:
+        return self.__name
+    
+    def getDescription(self) -> str:
+        return self.__description
+    
+    def getLanguages(self) -> List[str]:
+        return self.__languages
+    
+    def getTools(self) -> List[str]:
+        return self.__tools
+    
+    def isCompleted(self) -> bool:
+        return self.__completed
+    
+    def getCompletionDate(self) -> date:
+        return self.__completionDate
+    
+    
