@@ -1,7 +1,7 @@
 from typing import Dict
-from User import User
+from users.User import User
 
-class UserFacade:
+class Facade:
     
     def __init__(self) -> None:
         self.__users: Dict[str, User] = dict()
