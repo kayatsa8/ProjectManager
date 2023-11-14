@@ -1,11 +1,14 @@
-from typing import Dict
+from typing import Dict, List
+from Server.projects.Project import Project
 from users.User import User
 
 class Facade:
     
     def __init__(self) -> None:
-        self.__users: Dict[str, User] = dict()
+        self.__users: Dict[str, User] = dict()  # (username, User)
         self.__passwordLength: int = 4
+
+    ### Users
 
     def register(self, username: str, password: str) -> None:
         if username is None or username in self.__users:
@@ -77,3 +80,87 @@ class Facade:
             raise Exception("The user cannot be deleted right now, please try again to enter your password")
         
         self.__users.pop(username, None)
+
+    
+    ### Projects
+
+    def __userSearchException(self, username: str) -> None:
+         if username not in self.__users:
+            raise Exception("No such user")
+         
+    def __userLoggedInException(self, user: User) -> None:
+        if not user.isLoggedIn():
+            raise Exception("The user is not logged in")
+
+    def getProject(self, username: str, projectName: str) -> Project:
+        self.__userSearchException(username)
+        
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+        
+        return user.getProject(projectName)
+    
+    def addProject(self, username: str, projectName: str, description: str, languages: List[str], tools: List[str]) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.addProject(projectName, description, languages, tools)
+
+    def deleteProject(self, username: str, projectName: str) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.deleteProject(projectName)
+
+    def changeProjectName(self, username: str, projectName: str, newProjectName: str) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.changeProjectName(projectName, newProjectName)
+    
+    def changeProjectDescription(self, username: str, projectName: str, description: str) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.changeProjectDescription
+
+    def changeProjectLanguages(self, username: str, projectName: str, languages: List[str]) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.changeProjectLanguages(projectName, languages)
+
+    def changeProjectTools(self, username: str, projectName: str, tools: List[str]) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.changeProjectTools(projectName, tools)
+
+    def markProjectCompleteIncomplete(self, username: str, projectName: str) -> None:
+        self.__userSearchException(username)
+
+        user: User = self.__users[username]
+
+        self.__userLoggedInException(user)
+
+        user.markProjectCompleteIncomplete(projectName)
+
