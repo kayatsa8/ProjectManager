@@ -1,5 +1,5 @@
 from typing import Dict, List
-from Server.projects.Project import Project
+from projects.Project import Project
 from users.User import User
 
 class Facade:

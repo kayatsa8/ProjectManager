@@ -1,5 +1,5 @@
 from typing import Dict, List
-from Server.projects.Project import Project
+from BusinessLayer.projects.Project import Project
 
 
 class User:
