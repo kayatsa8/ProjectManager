@@ -114,3 +114,6 @@ class User:
 
         self.__projects[projectName].markCompleteIncomplete()
 
+    def getAllProjectNames(self) -> List[str]:
+        return list(self.__projects.keys())
+
