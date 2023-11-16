@@ -1,6 +1,7 @@
 from typing import Dict, List
-from projects.Project import Project
-from users.User import User
+
+from BusinessLayer.projects.Project import Project
+from BusinessLayer.users.User import User
 
 class Facade:
     

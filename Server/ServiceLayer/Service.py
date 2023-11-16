@@ -1,10 +1,10 @@
 from typing import List
-from Server.BusinessLayer.Facade import Facade
-from Server.BusinessLayer.projects.Project import Project
-from Server.BusinessLayer.users.User import User
-from Server.ServiceLayer.Objects.ServiceProject import ServiceProject
-from Server.ServiceLayer.Objects.ServiceUser import ServiceUser
-from Server.ServiceLayer.Response import Response
+from BusinessLayer.Facade import Facade
+from BusinessLayer.projects.Project import Project
+from BusinessLayer.users.User import User
+from ServiceLayer.Objects.ServiceProject import ServiceProject
+from ServiceLayer.Objects.ServiceUser import ServiceUser
+from ServiceLayer.Response import Response
 
 
 class Service:

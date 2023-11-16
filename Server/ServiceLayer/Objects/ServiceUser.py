@@ -1,5 +1,5 @@
 from typing import List
-from Server.BusinessLayer.users.User import User
+from BusinessLayer.users.User import User
 
 
 class ServiceUser:

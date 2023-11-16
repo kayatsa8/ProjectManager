@@ -1,5 +1,5 @@
 from typing import List
-from Server.BusinessLayer.projects.Project import Project
+from BusinessLayer.projects.Project import Project
 from datetime import date
 
 
