@@ -1,5 +1,5 @@
 from typing import Dict, List
-from Server.projects.Project import Project
+from BusinessLayer.projects.Project import Project
 
 
 class User:
@@ -113,4 +113,7 @@ class User:
         self.__searchProjectException(projectName)
 
         self.__projects[projectName].markCompleteIncomplete()
+
+    def getAllProjectNames(self) -> List[str]:
+        return list(self.__projects.keys())
 
