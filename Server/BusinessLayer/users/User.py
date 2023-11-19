@@ -24,7 +24,7 @@ class User:
         if not self.__loggedIn:
             raise Exception("The user is not logged in!")
         
-        self.__loggedIn = True
+        self.__loggedIn = False
 
     def isLoggedIn(self) -> bool:
         return self.__loggedIn
