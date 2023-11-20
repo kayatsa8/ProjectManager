@@ -12,7 +12,10 @@ class Facade:
     ### Users
 
     def register(self, username: str, password: str) -> None:
-        if username is None or username in self.__users:
+        if len(username) < 1:
+            raise Exception("Empty username")
+
+        if username in self.__users:
             raise Exception("A user with the given username is already exist!")
         
         if not self.__isValidPassword(password):
@@ -23,8 +26,6 @@ class Facade:
         self.__users[username] = user      
 
     def __isValidPassword(self, password: str) -> bool:
-        if password is None:
-            return False
         
         # 4 is arbitrary
         if len(password) < self.__passwordLength:
