@@ -154,7 +154,18 @@ class Tests(unittest.TestCase):
         response = self.service.changePassword(username2, password2, "148")
         self.assertTrue(response.isError(), "user2 change password to invalid one")
 
-    
+    def testDeleteUser_success(self):
+        self.registerAndLogIn()
+
+        response: Response[bool] = self.service.deleteUser(username2, password2)
+
+        self.assertFalse(response.isError())
+
+    def testDeleteUser_fail(self):
+
+        # user not registered
+        # user not logged in
+        # bad password
 
 
 

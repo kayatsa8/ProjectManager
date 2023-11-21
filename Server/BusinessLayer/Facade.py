@@ -70,7 +70,7 @@ class Facade:
 
     def getUser(self, username: str) -> User:
         if username not in self.__users:
-            raise Exception("zno such user")
+            raise Exception("no such user")
         
         return self.__users[username]
     
