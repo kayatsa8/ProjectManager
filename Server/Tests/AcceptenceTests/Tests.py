@@ -209,7 +209,7 @@ class Tests(unittest.TestCase):
         response = self.service.addProject(username2, projectName1, description1 ,languages1, tools1)
         self.assertFalse(response.isError(), "user2, cannot add first project")
 
-    def testAddProjectFail(self):
+    def testAddProject_fail(self):
         response: Response[bool]
 
         # user not registered
