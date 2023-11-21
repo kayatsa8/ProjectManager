@@ -131,7 +131,7 @@ class Tests(unittest.TestCase):
 
         response: Response[bool] = self.service.changePassword(username2, password2, "password2.2")
 
-        self.assertFalse(response.isError())
+        self.assertFalse(response.isError(), "user2 couldn't change password")
 
     def testChangePassword_fail(self):
 
@@ -159,13 +159,27 @@ class Tests(unittest.TestCase):
 
         response: Response[bool] = self.service.deleteUser(username2, password2)
 
-        self.assertFalse(response.isError())
+        self.assertFalse(response.isError(), "user2 is not deleted")
 
     def testDeleteUser_fail(self):
 
+        response: Response[bool]
+
         # user not registered
+        response = self.service.deleteUser(username2, password2)
+        self.assertTrue(response.isError(), "user2 was deleted but is not registered")
+        
+        self.registerUsers()
+
         # user not logged in
+        response = self.service.deleteUser(username2, password2)
+        self.assertTrue(response.isError(), "user2 was deleted while logged out")
+
+        self.service.logIn(username2, password2)
+
         # bad password
+        response = self.service.deleteUser(username2, password1)
+        self.assertTrue(response.isError(), "user2 was deleted with bad password")
 
 
 
