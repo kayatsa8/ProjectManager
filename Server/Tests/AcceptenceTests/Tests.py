@@ -2,16 +2,28 @@ import sys
 sys.path.append("Server")
 
 import unittest
+from typing import List
 
 from ServiceLayer.Service import Service
 from ServiceLayer.Response import Response
 
 
-
+# users
 username1: str = "username1"
 password1: str = "password1"
 username2: str = "username2"
 password2: str = "password2"
+
+# projects
+projectName1: str = "project1"
+description1: str = "description1"
+languages1: List[str] = ["Java"]
+tools1: List[str] = ["Eclipse"]
+projectName2: str = "project2"
+description2: str = "description2"
+languages2: List[str] = ["Python"]
+tools2: List[str] = ["Colab"]
+
 
 
 class Tests(unittest.TestCase):
@@ -181,7 +193,43 @@ class Tests(unittest.TestCase):
         response = self.service.deleteUser(username2, password1)
         self.assertTrue(response.isError(), "user2 was deleted with bad password")
 
+    def testAddProject_success(self):
+        response: Response[bool]
+        self.registerAndLogIn()
 
+        # add fisrt project
+        response = self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        self.assertFalse(response.isError(), "user1 cannot add first project")
+
+        # add second project
+        response = self.service.addProject(username1, projectName2, description2, languages2, tools2)
+        self.assertFalse(response.isError(), "user1 cannot add second project")
+
+        # add same first project to second user
+        response = self.service.addProject(username2, projectName1, description1 ,languages1, tools1)
+        self.assertFalse(response.isError(), "user2, cannot add first project")
+
+    def testAddProjectFail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        self.assertTrue(response.isError(), "user1 added project without being registered")
+
+        self.registerUsers()
+
+        # user not logged in
+        response = self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        self.assertTrue(response.isError(), "user1 added project without being logged in")
+
+        self.service.logIn(username1, password1)
+
+        # project name taken
+        self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        response = self.service.addProject(username1, projectName1, description2, languages2, tools2)
+        self.assertTrue(response.isError(), "user1 added 2 projects with the same name")
+
+        
 
 
 
