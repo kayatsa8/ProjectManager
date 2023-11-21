@@ -29,6 +29,8 @@ class Tests(unittest.TestCase):
         self.service.logIn(username1, password1)
         self.service.logIn(username2, password2)
 
+    
+    
     def testRegister_success(self):
         response: Response[bool] = self.service.register(username1, password1)
         self.assertFalse(response.isError(), "user1 did not register")
@@ -96,8 +98,63 @@ class Tests(unittest.TestCase):
         response = self.service.logOut(username2)
         self.assertTrue(response.isError(), "user2 not logged in but logged out")
 
-        
+    def testChangeUsername_success(self):
+        self.registerAndLogIn()
 
+        response: Response[bool] = self.service.changeUsername(username1, "username1.1", password1)
+
+        self.assertFalse(response.isError(), "user1's username did not change")
+
+    def testChangeUsername_fail(self):
+
+        # user does not exist
+        response: Response[bool] = self.service.changeUsername(username1, "sdvdsv", password1)
+        self.assertTrue(response.isError(), "A user that does not exist changed his username")
+
+        self.registerAndLogIn()
+
+        # change username to an existing one
+        response = self.service.changeUsername(username1, username2, password1)
+        self.assertTrue(response.isError(), "user1 changed his username to user2's username")
+
+        # user is not logged in
+        self.service.logOut(username1)
+        response = self.service.changeUsername(username1, "username1.1", password1)
+        self.assertTrue(response.isError(), "user1 changed username while not logged in")
+
+        # bad password
+        response = self.service.changeUsername(username2, "username2.2", password1)
+        self.assertTrue(response.isError(), "user2 changed username with bad password")
+
+    def testChangePassword_success(self):
+        self.registerAndLogIn()
+
+        response: Response[bool] = self.service.changePassword(username2, password2, "password2.2")
+
+        self.assertFalse(response.isError())
+
+    def testChangePassword_fail(self):
+
+        # user does not exist
+        response: Response[bool] = self.service.changePassword(username2, password2, password1)
+        self.assertTrue(response.isError(), "A user that does not exist changed his password")
+
+        # user not logged in
+        self.registerUsers()
+        response = self.service.changePassword(username2, password2, password1)
+        self.assertTrue(response.isError(), "user2 change password while logged out")
+
+        self.service.logIn(username2, password2)
+
+        # invalid old password
+        response = self.service.changePassword(username2, password1, password1)
+        self.assertTrue(response.isError(), "user2 change password with bad old password")
+
+        # invalid new password
+        response = self.service.changePassword(username2, password2, "148")
+        self.assertTrue(response.isError(), "user2 change password to invalid one")
+
+    
 
 
 
