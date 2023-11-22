@@ -35,14 +35,22 @@ class Tests(unittest.TestCase):
         self.service.register(username1, password1)
         self.service.register(username2, password2)
 
-    def registerAndLogIn(self) -> None:
-        self.registerUsers()
-
+    def loginUsers(self) -> None:
         self.service.logIn(username1, password1)
         self.service.logIn(username2, password2)
 
-    
-    
+    def registerAndLogIn(self) -> None:
+        self.registerUsers()
+
+        self.loginUsers()
+
+    def addProjects(self) -> None:
+        self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        self.service.addProject(username1, projectName2, description2, languages2, tools2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+
+
+
     def testRegister_success(self):
         response: Response[bool] = self.service.register(username1, password1)
         self.assertFalse(response.isError(), "user1 did not register")
@@ -229,7 +237,220 @@ class Tests(unittest.TestCase):
         response = self.service.addProject(username1, projectName1, description2, languages2, tools2)
         self.assertTrue(response.isError(), "user1 added 2 projects with the same name")
 
+    def testsDeleteProject_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.deleteProject(username1, projectName1)
+        self.assertFalse(response.isError())
+    
+    def testDeleteProject_fail(self):
+
+        response: Response[bool]
         
+        # user not registered
+        response = self.service.deleteProject(username1, projectName1)
+        self.assertTrue(response.isError(), "user1 not registered but deleted a project")
+
+        self.registerUsers()
+
+        # user not logged in
+        response = self.service.deleteProject(username1, projectName1)
+        self.assertTrue(response.isError(), "user1 not logged in but deleted a project")
+        self.loginUsers()
+        self.addProjects()
+        self.service.logOut(username1)
+        response = self.service.deleteProject(username1, projectName1)
+        self.assertTrue(response.isError(), "user1 not logged in but deleted existing project")
+
+        # no such project
+        response = self.service.deleteProject(username2, projectName2)
+        self.assertTrue(response.isError(), "user2 deleted a project that doesn't exist")
+
+    def testChangeProjectName_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.changeProjectName(username1, projectName1, "project3")
+
+        self.assertFalse(response.isError(), "user1 cannot change project1's name")
+
+    def testChangeProjectName_fail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.changeProjectName(username2, projectName1, projectName2)
+        self.assertTrue(response.isError(), "not registered user changed project's name")
+
+        self.registerUsers()
+
+        # user not logged in, project doesn't exist
+        response = self.service.changeProjectName(username2, projectName1, projectName2)
+        self.assertTrue(response.isError(), "not logged in user changed project's name, project doesn't exist")
+
+        self.service.logIn(username2, password2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+        self.service.logOut(username2)
+
+        # user not logged in, project exists
+        response = self.service.changeProjectName(username2, projectName1, projectName2)
+        self.assertTrue(response.isError(), "not logged in user changed project's name, project exists")
+
+        self.service.logIn(username1, password1)
+
+        # user logged in, project doesn't exist
+        response = self.service.changeProjectName(username1, projectName2, "project3")
+        self.assertTrue(response.isError(), "user1 changed name to project that doesn't exist")
+
+        self.service.addProject(username1, projectName1, description1, languages1, tools1)
+        self.service.addProject(username1, projectName2, description2, languages2, tools2)
+
+        # user logged in, project exists, newProjectName taken
+        response = self.service.changeProjectName(username1, projectName2, projectName1)
+        self.assertTrue(response.isError(), "user1 changed project1's name to project1's name")
+
+    def testChangeProjectDescription_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.changeProjectDescription(username1, projectName1, "description5")
+
+        self.assertFalse(response.isError(), "user1 cannot change project1's description")
+
+    def testChangeProjectDescription_fail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.changeProjectDescription(username2, projectName1, description2)
+        self.assertTrue(response.isError(), "not registered user changed project's description")
+
+        self.registerUsers()
+
+        # user not logged in, project doesn't exist
+        response = self.service.changeProjectDescription(username2, projectName1, description2)
+        self.assertTrue(response.isError(), "not logged in user changed project's description, project doesn't exist")
+
+        self.service.logIn(username2, password2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+        self.service.logOut(username2)
+
+        # user not logged in, project exists
+        response = self.service.changeProjectDescription(username2, projectName1, description2)
+        self.assertTrue(response.isError(), "not logged in user changed project's description, project exists")
+
+        self.service.logIn(username1, password1)
+
+        # user logged in, project doesn't exist
+        response = self.service.changeProjectName(username1, projectName2, description1)
+        self.assertTrue(response.isError(), "user1 changed description to project that doesn't exist")
+
+    def testChangeProjectLanguages_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.changeProjectLanguages(username1, projectName1, languages2)
+
+        self.assertFalse(response.isError(), "user1 cannot change project1's languages")
+
+    def testChangeProjectlanguages_fail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.changeProjectLanguages(username2, projectName1, languages2)
+        self.assertTrue(response.isError(), "not registered user changed project's languages")
+
+        self.registerUsers()
+
+        # user not logged in, project doesn't exist
+        response = self.service.changeProjectLanguages(username2, projectName1, languages2)
+        self.assertTrue(response.isError(), "not logged in user changed project's languages, project doesn't exist")
+
+        self.service.logIn(username2, password2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+        self.service.logOut(username2)
+
+        # user not logged in, project exists
+        response = self.service.changeProjectLanguages(username2, projectName1, languages2)
+        self.assertTrue(response.isError(), "not logged in user changed project's languages, project exists")
+
+        self.service.logIn(username1, password1)
+
+        # user logged in, project doesn't exist
+        response = self.service.changeProjectLanguages(username1, projectName2, languages1)
+        self.assertTrue(response.isError(), "user1 changed languages to project that doesn't exist")
+
+    def testChangeProjectTools_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.changeProjectTools(username1, projectName1, tools2)
+
+        self.assertFalse(response.isError(), "user1 cannot change project1's tools")
+
+    def testChangeProjectTolls_fail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.changeProjectTools(username2, projectName1, tools2)
+        self.assertTrue(response.isError(), "not registered user changed project's tools")
+
+        self.registerUsers()
+
+        # user not logged in, project doesn't exist
+        response = self.service.changeProjectTools(username2, projectName1, tools2)
+        self.assertTrue(response.isError(), "not logged in user changed project's tools, project doesn't exist")
+
+        self.service.logIn(username2, password2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+        self.service.logOut(username2)
+
+        # user not logged in, project exists
+        response = self.service.changeProjectTools(username2, projectName1, tools2)
+        self.assertTrue(response.isError(), "not logged in user changed project's tools, project exists")
+
+        self.service.logIn(username1, password1)
+
+        # user logged in, project doesn't exist
+        response = self.service.changeProjectTools(username1, projectName2, tools1)
+        self.assertTrue(response.isError(), "user1 changed tools to project that doesn't exist")
+
+    def testMarkProjectCompleteIncomplete_success(self):
+        self.registerAndLogIn()
+        self.addProjects()
+
+        response: Response[bool] = self.service.markProjectCompleteIncomplete(username2, projectName1)
+        self.assertFalse(response.isError(), "user2 cannot mark project as complete")
+
+        response: Response[bool] = self.service.markProjectCompleteIncomplete(username2, projectName1)
+        self.assertFalse(response.isError(), "user2 cannot mark project as incomplete")
+
+    def testMarkProjectCompleteIncomplete_fail(self):
+        response: Response[bool]
+
+        # user not registered
+        response = self.service.markProjectCompleteIncomplete(username2, projectName1)
+        self.assertTrue(response.isError(), "not registered user changed project's complete status")
+
+        self.registerUsers()
+
+        # user not logged in, project doesn't exist
+        response = self.service.markProjectCompleteIncomplete(username2, projectName1)
+        self.assertTrue(response.isError(), "not logged in user changed project's complete status, project doesn't exist")
+
+        self.service.logIn(username2, password2)
+        self.service.addProject(username2, projectName1, description1, languages1, tools1)
+        self.service.logOut(username2)
+
+        # user not logged in, project exists
+        response = self.service.markProjectCompleteIncomplete(username2, projectName1)
+        self.assertTrue(response.isError(), "not logged in user changed project's complete status, project exists")
+
+        self.service.logIn(username1, password1)
+
+        # user logged in, project doesn't exist
+        response = self.service.markProjectCompleteIncomplete(username1, projectName2)
+        self.assertTrue(response.isError(), "user1 changed complete status to project that doesn't exist")
+
 
 
 
