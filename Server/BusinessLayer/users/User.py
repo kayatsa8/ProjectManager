@@ -117,3 +117,22 @@ class User:
     def getAllProjectNames(self) -> List[str]:
         return list(self.__projects.keys())
 
+    ### use only for DB
+    
+    def getPassword(self) -> str:
+        return self.__password
+    
+    def getProjects(self) -> Dict[str, Project]:
+        return self.__projects
+    
+    def setUsername(self, username: str) -> None:
+        self.__username = username
+
+    def setPassword(self, password: str) -> None:
+        self.__password = password
+
+    def setLoggedIn(self, loggedIn: bool) -> None:
+        self.__loggedIn = loggedIn
+
+    def setProjects(self, projects: Dict[str, Project]) -> None:
+        self.__projects = projects

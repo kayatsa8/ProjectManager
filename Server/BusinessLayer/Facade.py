@@ -9,6 +9,7 @@ class Facade:
         self.__users: Dict[str, User] = dict()  # (username, User)
         self.__passwordLength: int = 4
 
+    
     ### Users
 
     def register(self, username: str, password: str) -> None:
