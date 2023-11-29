@@ -35,8 +35,7 @@ class DataController:
         pass
 
     def deleteUser(self, username: str) -> None:
-        # TODO
-        pass
+        self.userCollection.delete_one({"username": username})
 
     
     # helpers
