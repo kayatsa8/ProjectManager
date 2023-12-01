@@ -6,10 +6,10 @@ from PersistenceLayer.DataController import DataController
 
 class Facade:
     
-    def __init__(self) -> None:
+    def __init__(self, testMode: bool = False) -> None:
         self.__users: Dict[str, User] = dict()  # (username, User)
         self.__passwordLength: int = 4
-        self.__dataController = DataController()
+        self.__dataController = DataController(testMode)
 
     
     ### Users
@@ -196,3 +196,6 @@ class Facade:
 
         self.__dataController.updateUser(username, user)
 
+    # for tests only; will have no effect in real run
+    def emptyDB(self) -> None:
+        self.__dataController.emptyDB()

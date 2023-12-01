@@ -8,11 +8,19 @@ from BusinessLayer.projects.Project import Project
 
 class DataController:
 
-    def __init__(self) -> None:
+    def __init__(self, testMode: bool = False) -> None:
         client = MongoClient("mongodb://localhost:27017")
         db = client.ProjectManagerDB
-        self.userCollection = db.Users
+
+        if not testMode:
+            self.userCollection = db.Users
+        else:
+            self.userCollection = db.Users_test
+
+        self.__testMode: bool = testMode
         
+
+
     # CRUD
 
     def createUser(self, user: User) -> None:
@@ -114,3 +122,8 @@ class DataController:
         projectDict: Dict[str, dict] = self.userProjectsToDict(user)
 
         self.userCollection.update_one({"username": user.getUsername()}, {"$set": {"projects": projectDict}})
+
+    # for tests only; will have no effect in real run
+    def emptyDB(self) -> None:
+        if self.__testMode:
+            self.userCollection.delete_many({})
