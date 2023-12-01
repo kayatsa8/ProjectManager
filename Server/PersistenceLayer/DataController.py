@@ -33,10 +33,10 @@ class DataController:
     def updateUser(self, originalUsername: str, user: User) -> None:
         dbUser: User = self.readUser(originalUsername)
 
-        if dbUser.getUsername() is not user.getUsername():
+        if not dbUser.getUsername() == user.getUsername():
             self.__updateUsername(dbUser.getUsername(), user.getUsername())
 
-        if dbUser.getPassword() is not user.getPassword():
+        if not dbUser.getPassword() == user.getPassword():
             self.__updatePassword(user.getUsername(), user.getPassword())
 
         self.__updateProjects(user)
