@@ -15,7 +15,7 @@ class User:
         if self.__loggedIn:
             raise Exception("The user is already logged in!")
         
-        if self.__password is not password:
+        if not self.__password == password:
             raise Exception("The given password is not correct!")
         
         self.__loggedIn = True
@@ -33,7 +33,7 @@ class User:
         if not self.__loggedIn:
             raise Exception("The user is not logged-in")
         
-        if password is not self.__password:
+        if not password == self.__password:
             raise Exception("The given password is not correct!")
         
         self.__username = newUsername
@@ -42,7 +42,7 @@ class User:
         if not self.__loggedIn:
             raise Exception("The user is not logged-in")
         
-        if oldPassword is not self.__password:
+        if not oldPassword == self.__password:
             raise Exception("The given password is not correct!")
         
         self.__password = newPassword
@@ -54,7 +54,7 @@ class User:
         if not self.__loggedIn:
             return False
         
-        if password is not self.__password:
+        if not password == self.__password:
             return False
         
         return True
