@@ -1,4 +1,4 @@
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Set
 from pymongo import MongoClient
 from datetime import date
 
@@ -30,9 +30,16 @@ class DataController:
 
         return user
 
-    def updateUser(self, user: User) -> None:
-        # TODO
-        pass
+    def updateUser(self, originalUsername: str, user: User) -> None:
+        dbUser: User = self.readUser(originalUsername)
+
+        if dbUser.getUsername() is not user.getUsername():
+            self.__updateUsername(dbUser.getUsername(), user.getUsername())
+
+        if dbUser.getPassword() is not user.getPassword():
+            self.__updatePassword(user.getUsername(), user.getPassword())
+
+        self.__updateProjects(user)
 
     def deleteUser(self, username: str) -> None:
         self.userCollection.delete_one({"username": username})
@@ -96,3 +103,14 @@ class DataController:
         dateList: List[int] = [int(string) for string in dateString.split("/")]
 
         return date(dateList[2], dateList[1], dateList[0])
+    
+    def __updateUsername(self, originalUsername: str, newUsername: str) -> None:
+        self.userCollection.update_one({"username": originalUsername}, {"$set": {"username": newUsername}})
+
+    def __updatePassword(self, username: str, password: str) -> None:
+        self.userCollection.update_one({"username": username}, {"$set": {"password": password}})
+
+    def __updateProjects(self, user: User) -> None:
+        projectDict: Dict[str, dict] = self.userProjectsToDict(user)
+
+        self.userCollection.update_one({"username": user.getUsername()}, {"$set": {"projects": projectDict}})
