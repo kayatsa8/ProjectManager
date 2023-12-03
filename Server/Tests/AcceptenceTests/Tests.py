@@ -29,7 +29,10 @@ tools2: List[str] = ["Colab"]
 class Tests(unittest.TestCase):
 
     def setUp(self) -> None:
-        self.service: Service = Service()
+        self.service: Service = Service(testMode=True)
+
+    def tearDown(self) -> None:
+        self.service.emptyDB()
 
     def registerUsers(self) -> None:
         self.service.register(username1, password1)

@@ -49,3 +49,25 @@ class Project:
         else:
             self.__completionDate = date.max
     
+
+    ### database only
+
+    def setName(self, name: str) -> None:
+        self.__name = name
+
+    def setDescription(self, desc: str) -> None:
+        self.__description = desc
+    
+    def setLanguages(self, languages: List[str]) -> None:
+        self.__languages = languages
+
+    def setTools(self, tools: List[str]) -> None:
+        self.__tools = tools
+
+    def setCompleted(self, completed: bool)-> None:
+        self.__completed = completed
+
+    def setCompletionDate(self, d: date) -> None:
+        self.__completionDate = d
+
+

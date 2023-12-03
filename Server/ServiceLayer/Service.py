@@ -9,8 +9,8 @@ from ServiceLayer.Response import Response
 
 class Service:
 
-    def __init__(self) -> None:
-        self.__facade = Facade()
+    def __init__(self, testMode: bool = False) -> None:
+        self.__facade: Facade = Facade(testMode)
 
     def register(self, username: str, password: str) -> Response[bool]:
         try:
@@ -119,4 +119,6 @@ class Service:
         except Exception as e:
             return Response.makeErrorResponse(str(e))
     
-    
+    # for tests only; will have no effect in real run
+    def emptyDB(self) -> None:
+        self.__facade.emptyDB()

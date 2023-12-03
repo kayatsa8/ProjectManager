@@ -2,13 +2,16 @@ from typing import Dict, List
 
 from BusinessLayer.projects.Project import Project
 from BusinessLayer.users.User import User
+from PersistenceLayer.DataController import DataController
 
 class Facade:
     
-    def __init__(self) -> None:
+    def __init__(self, testMode: bool = False) -> None:
         self.__users: Dict[str, User] = dict()  # (username, User)
         self.__passwordLength: int = 4
+        self.__dataController = DataController(testMode)
 
+    
     ### Users
 
     def register(self, username: str, password: str) -> None:
@@ -23,7 +26,9 @@ class Facade:
         
         user: User = User(username, password)
 
-        self.__users[username] = user      
+        self.__users[username] = user
+
+        self.__dataController.createUser(user)
 
     def __isValidPassword(self, password: str) -> bool:
         
@@ -35,7 +40,12 @@ class Facade:
 
     def logIn(self, username: str, password: str) -> None:
         if username not in self.__users:
-            raise Exception("No such user")
+            try:
+                user: User = self.__dataController.readUser(username)
+                self.__users[username] = user
+            except:
+                raise Exception("No such user")
+
         
         self.__users[username].logIn(password)
         
@@ -58,6 +68,8 @@ class Facade:
 
         self.__users[newUsername] = self.__users.pop(oldUsername)
 
+        self.__dataController.updateUser(oldUsername, user)
+
     def changePassword(self, username: str, oldPassword: str, newPassword: str) -> None:
         if username not in self.__users:
             raise Exception("No such user")
@@ -67,6 +79,8 @@ class Facade:
         
         user: User = self.__users[username]
         user.changePassword(oldPassword, newPassword)
+
+        self.__dataController.updateUser(username, user)
 
     def getUser(self, username: str) -> User:
         if username not in self.__users:
@@ -82,6 +96,8 @@ class Facade:
             raise Exception("The user cannot be deleted right now, please try again to enter your password")
         
         self.__users.pop(username, None)
+
+        self.__dataController.deleteUser(username)
 
     
     ### Projects
@@ -112,6 +128,8 @@ class Facade:
 
         user.addProject(projectName, description, languages, tools)
 
+        self.__dataController.updateUser(username, user)
+
     def deleteProject(self, username: str, projectName: str) -> None:
         self.__userSearchException(username)
 
@@ -121,6 +139,8 @@ class Facade:
 
         user.deleteProject(projectName)
 
+        self.__dataController.updateUser(username, user)
+
     def changeProjectName(self, username: str, projectName: str, newProjectName: str) -> None:
         self.__userSearchException(username)
 
@@ -129,6 +149,8 @@ class Facade:
         self.__userLoggedInException(user)
 
         user.changeProjectName(projectName, newProjectName)
+
+        self.__dataController.updateUser(username, user)
     
     def changeProjectDescription(self, username: str, projectName: str, description: str) -> None:
         self.__userSearchException(username)
@@ -137,7 +159,9 @@ class Facade:
 
         self.__userLoggedInException(user)
 
-        user.changeProjectDescription
+        user.changeProjectDescription(projectName, description)
+
+        self.__dataController.updateUser(username, user)
 
     def changeProjectLanguages(self, username: str, projectName: str, languages: List[str]) -> None:
         self.__userSearchException(username)
@@ -148,6 +172,8 @@ class Facade:
 
         user.changeProjectLanguages(projectName, languages)
 
+        self.__dataController.updateUser(username, user)
+
     def changeProjectTools(self, username: str, projectName: str, tools: List[str]) -> None:
         self.__userSearchException(username)
 
@@ -156,6 +182,8 @@ class Facade:
         self.__userLoggedInException(user)
 
         user.changeProjectTools(projectName, tools)
+
+        self.__dataController.updateUser(username, user)
 
     def markProjectCompleteIncomplete(self, username: str, projectName: str) -> None:
         self.__userSearchException(username)
@@ -166,3 +194,8 @@ class Facade:
 
         user.markProjectCompleteIncomplete(projectName)
 
+        self.__dataController.updateUser(username, user)
+
+    # for tests only; will have no effect in real run
+    def emptyDB(self) -> None:
+        self.__dataController.emptyDB()
