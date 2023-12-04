@@ -12,3 +12,13 @@ class ServiceProject:
         self.tools: List[str] = project.getTools()
         self.completed: bool = project.isCompleted()
         self.completionDate: date = project.getCompletionDate()
+
+    def toDict(self) -> dict:
+        return {
+            "name": self.name,
+            "description": self.description,
+            "languages": self.languages,
+            "tools": self.tools,
+            "completed": self.completed,
+            "completionDate": self.completionDate
+        }
