@@ -6,6 +6,7 @@ from typing import List
 
 from ServiceLayer.Service import Service
 from ServiceLayer.Response import Response
+from ServiceLayer.Objects.ServiceUser import ServiceUser
 
 
 # users
@@ -79,7 +80,7 @@ class Tests(unittest.TestCase):
     def testLogIn_success(self):
         self.registerUsers()
 
-        response: Response[bool] = self.service.logIn(username1, password1)
+        response: Response[ServiceUser] = self.service.logIn(username1, password1)
         self.assertFalse(response.isError(), "user1 didn't log in")
 
         response = self.service.logIn(username2, password2)
@@ -89,7 +90,7 @@ class Tests(unittest.TestCase):
         self.registerUsers()
 
         # log in to not existing users
-        response: Response[bool] = self.service.logIn("dfgvsd", password1)
+        response: Response[ServiceUser] = self.service.logIn("dfgvsd", password1)
         self.assertTrue(response.isError(), "A user that does not exist logged in")
 
         # log in with bad password
