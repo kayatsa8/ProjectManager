@@ -19,10 +19,12 @@ class Service:
         except Exception as e:
             return Response.makeErrorResponse(str(e))
         
-    def logIn(self, username: str, password: str) -> Response[bool]:
+    def logIn(self, username: str, password: str) -> Response[ServiceUser]:
         try:
             self.__facade.logIn(username, password)
-            return Response.makeValueResponse(True)
+            user: User = self.__facade.getUser(username)
+            serviceUser: ServiceUser = ServiceUser(user)
+            return Response.makeValueResponse(serviceUser)
         except Exception as e:
             return Response.makeErrorResponse(str(e))
         
@@ -46,15 +48,7 @@ class Service:
             return Response.makeValueResponse(True)
         except Exception as e:
             return Response.makeErrorResponse(str(e))
-        
-    def getUser(self, username: str) -> Response[ServiceUser]:
-        try:
-            user: User = self.__facade.getUser(username)
-            serviceUser: ServiceUser = ServiceUser(user)
-            return Response.makeValueResponse(serviceUser)
-        except Exception as e:
-            return Response.makeErrorResponse(str(e))
-        
+            
     def deleteUser(self, username: str, password: str) -> Response[bool]:
         try:
             self.__facade.deleteUser(username, password)
