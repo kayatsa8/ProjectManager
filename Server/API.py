@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Union
 from flask import Flask, request, jsonify
 
 from ServiceLayer.Service import Service
@@ -132,6 +132,30 @@ def getProject():
         status = 400
 
     return jsonify(response.toDict()), status
+
+@app.route("/api/add_project", methods=["POST"])
+def addProject():
+    userData: Dict[str, Union[str, List[str]]] = request.get_json()
+    validation: bool = validateRequestSchema(userData, ["username", "projectName", "description",
+                                                        "languages", "tool"])
+
+    if not validation:
+        return {"error": "bad request body"}, 400
+    
+    # response: Response[bool] = service.addProject(userData["username"], userData["projectName"],
+                                                #   userData["description"], userData["languages"],
+                                                #   userData["tools"])
+    status: int = 200
+
+    # if response.isError():
+        # status = 400
+
+    # return jsonify(response.toDict()), status
+    return {}
+
+
+
+
 
 
 
