@@ -1,12 +1,12 @@
-from typing import Dict, List, TypedDict, get_type_hints
-from uu import Error
+from typing import Dict, List
+
 from flask import Flask, request, jsonify
 
 from ServiceLayer.Service import Service
 from ServiceLayer.Response import Response
 from ServiceLayer.Objects.ServiceUser import ServiceUser
 from ServiceLayer.Objects.ServiceProject import ServiceProject
-from api_helpers import addProjectHelper, registerLoginHelper
+from apiRequestBodies import addProjectBody, changePasswordBody, changeUsernameBody, deleteUserBody, getProjectBody, logOutBody, registerLoginBody
 
 app: Flask = Flask(__name__)
 service: Service = Service()
@@ -28,9 +28,9 @@ def registerUser():
     if not validateRequestSchema(data, fields):
         return {"error": "bad request body"}, 400 
     
-    helper: registerLoginHelper = registerLoginHelper(request.get_json())
+    body: registerLoginBody = registerLoginBody(request.get_json())
 
-    response: Response[bool] = service.register(helper["username"], helper["password"])
+    response: Response[bool] = service.register(body["username"], body["password"])
     status: int = 201
 
     if response.isError():
@@ -38,128 +38,164 @@ def registerUser():
 
     return jsonify(response.toDict()), status
 
-# @app.route("/api/log_in", methods=["GET"])
-# def logIn():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["username", "password"])
+@app.route("/api/log_in", methods=["GET"])
+def logIn():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "password": str
+    }
 
-#     if not validation:
-#         return {"error": "bad request body"}, 400
-
-#     response: Response[ServiceUser] = service.logIn(userData["username"], userData["password"])
-#     status: int = 200
-
-#     if response.isError():
-#         status = 400
-
-#     return jsonify(response.toDict()), status
-
-# @app.route("/api/log_out", methods=["GET"])
-# def logOut():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["username"])
-
-#     if not validation:
-#         return {"error": "bad request body"}, 400
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
     
-#     response: Response[bool] = service.logOut(userData["username"])
-#     status: int = 200
+    body: registerLoginBody = registerLoginBody(request.get_json())
 
-#     if response.isError():
-#         status = 400
+    response: Response[ServiceUser] = service.logIn(body["username"], body["password"])
+    status: int = 200
 
-#     return jsonify(response.toDict()), status
+    if response.isError():
+        status = 400
 
-# @app.route("/api/change_username", methods=["POST"])
-# def changeUsername():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["oldUsername", "newUsername", "password"])
+    return jsonify(response.toDict()), status
 
-#     if not validation:
-#         return {"error": "bad request body"}, 400
+@app.route("/api/log_out", methods=["GET"])
+def logOut():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
     
-#     response: Response[bool] = service.changeUsername(userData["oldUsername"],
-#                                                       userData["newUsername"],
-#                                                       userData["password"])
-#     status: int = 200
-
-#     if response.isError():
-#         status = 400
-
-#     return jsonify(response.toDict()), status
-
-# @app.route("/api/change_password", methods=["POST"])
-# def changePassword():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["username", "oldPassword", "newPassword"])
-
-#     if not validation:
-#         return {"error": "bad request body"}, 400
+    body: logOutBody = logOutBody(request.get_json())
     
-#     response: Response[bool] = service.changePassword(userData["username"],
-#                                                       userData["oldPassword"],
-#                                                       userData["newPassword"])
-#     status: int = 200
+    response: Response[bool] = service.logOut(body["username"])
+    status: int = 200
 
-#     if response.isError():
-#         status = 400
+    if response.isError():
+        status = 400
 
-#     return jsonify(response.toDict()), status
+    return jsonify(response.toDict()), status
 
-# @app.route("/api/delete_user", methods=["POST"])
-# def deleteUser():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["username", "password"])
+@app.route("/api/change_username", methods=["POST"])
+def changeUsername():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "oldUsername": str,
+        "newUsername": str,
+        "password": str
+    }
 
-#     if not validation:
-#         return {"error": "bad request body"}, 400
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
     
-#     response: Response[bool] = service.deleteUser(userData["username"],
-#                                                   userData["password"])
-#     status: int = 200
-
-#     if response.isError():
-#         status = 400
-
-#     return jsonify(response.toDict()), status
-
-# @app.route("/api/get_project", methods=["GET"])
-# def getProject():
-#     userData: Dict[str, str] = request.get_json()
-#     validation: bool = validateRequestSchema(userData, ["username", "projectName"])
-
-#     if not validation:
-#         return {"error": "bad request body"}, 400
+    body: changeUsernameBody= changeUsernameBody(request.get_json())
     
-#     response: Response[ServiceProject] = service.getProject(userData["username"],
-#                                                             userData["projectName"])
-#     status: int = 200
+    response: Response[bool] = service.changeUsername(body["oldUsername"],
+                                                      body["newUsername"],
+                                                      body["password"])
+    status: int = 200
 
-#     if response.isError():
-#         status = 400
+    if response.isError():
+        status = 400
 
-#     return jsonify(response.toDict()), status
+    return jsonify(response.toDict()), status
 
-# @app.route("/api/add_project", methods=["POST"])
-# def addProject():
-#     userData: addProjectHelper = request.get_json()
-#     # validation: bool = validateRequestSchema(userData, ["username", "projectName", "description",
-#     #                                                     "languages", "tool"])
+@app.route("/api/change_password", methods=["POST"])
+def changePassword():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "oldPassword": str,
+        "newPassword": str
+    }
 
-#     # if not validation:
-#     #     return {"error": "bad request body"}, 400
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
     
-#     response: Response[bool] = service.addProject(userData["username"], userData["projectName"],
-#                                                   userData["description"], userData["languages"],
-#                                                   userData["tools"])
-#     status: int = 200
+    body: changePasswordBody = changePasswordBody(request.get_json())
+    
+    response: Response[bool] = service.changePassword(body["username"],
+                                                      body["oldPassword"],
+                                                      body["newPassword"])
+    status: int = 200
 
-#     # if response.isError():
-#         # status = 400
+    if response.isError():
+        status = 400
 
-#     # return jsonify(response.toDict()), status
-#     return {}
+    return jsonify(response.toDict()), status
 
+@app.route("/api/delete_user", methods=["POST"])
+def deleteUser():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "password": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: deleteUserBody = deleteUserBody(request.get_json())
+    
+    response: Response[bool] = service.deleteUser(body["username"],
+                                                  body["password"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/get_project", methods=["GET"])
+def getProject():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: getProjectBody = getProjectBody(request.get_json())
+    
+    response: Response[ServiceProject] = service.getProject(body["username"],
+                                                            body["projectName"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/add_project", methods=["POST"])
+def addProject():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str,
+        "description": str,
+        "languages": List[str],
+        "tools": List[str]
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: addProjectBody = addProjectBody(request.get_json())
+    
+    response: Response[bool] = service.addProject(body["username"], body["projectName"],
+                                                  body["description"], body["languages"],
+                                                  body["tools"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
 
 
 
