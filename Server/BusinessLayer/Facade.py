@@ -19,6 +19,7 @@ class Facade:
             raise Exception("Empty username")
 
         if username in self.__users:
+            # TODO: BUGFIX: search in DB
             raise Exception("A user with the given username is already exist!")
         
         if not self.__isValidPassword(password):
