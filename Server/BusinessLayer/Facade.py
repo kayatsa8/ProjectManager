@@ -1,4 +1,5 @@
 from typing import Dict, List
+from xmlrpc.client import boolean
 
 from BusinessLayer.projects.Project import Project
 from BusinessLayer.users.User import User
@@ -19,8 +20,11 @@ class Facade:
             raise Exception("Empty username")
 
         if username in self.__users:
-            # TODO: BUGFIX: search in DB
             raise Exception("A user with the given username is already exist!")
+        else:
+            if self.__dataController.isPersisted(username):
+                raise Exception("A user with the given username is already exist!")
+
         
         if not self.__isValidPassword(password):
             raise Exception("The password should be at least " + str(self.__passwordLength) + " characters")
