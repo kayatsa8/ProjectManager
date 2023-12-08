@@ -52,6 +52,13 @@ class DataController:
     def deleteUser(self, username: str) -> None:
         self.userCollection.delete_one({"username": username})
 
+    def isPersisted(self, username: str) -> bool:
+        userDict: Optional[dict] = self.userCollection.find_one({"username": username})
+
+        if userDict is not None:
+            return True
+        else:
+            return False
     
     # helpers
 

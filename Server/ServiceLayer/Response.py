@@ -1,4 +1,6 @@
 from typing import Generic, TypeVar
+from ServiceLayer.Objects.ServiceUser import ServiceUser
+from ServiceLayer.Objects.ServiceProject import ServiceProject
 
 
 T = TypeVar("T")
@@ -20,6 +22,20 @@ class Response(Generic[T]):
     
     def getErrorMessage(self) -> str:
         return self.__message
+    
+    def toDict(self) -> dict:
+        if isinstance(self.__value, ServiceProject) or isinstance(self.__value, ServiceUser):
+            return {
+                "value": self.__value.toDict(),
+                "error": self.__error,
+                "message": self.__message
+            }
+
+        return {
+            "value": self.__value,
+            "error": self.__error,
+            "message": self.__message
+        }
     
     
 
