@@ -39,3 +39,35 @@ class addProjectBody(TypedDict):
     tools: List[str]
 
 
+class deleteProjectBody(TypedDict):
+    username: str
+    projectName: str
+
+
+class changeProjectNameBody(TypedDict):
+    username: str
+    projectName: str
+    newProjectName: str
+
+
+class changeProjectDescriptionBody(TypedDict):
+    username: str
+    projectName: str
+    description: str
+
+
+class changeProjectLanguagesBody(TypedDict):
+    username: str
+    projectName: str
+    languages: List[str]
+
+
+class changeProjectToolsBody(TypedDict):
+    username: str
+    projectName: str
+    tools: List[str]
+
+
+class markProjectBody(TypedDict):
+    username: str
+    projectName: str

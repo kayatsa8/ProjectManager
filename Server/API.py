@@ -6,7 +6,8 @@ from ServiceLayer.Service import Service
 from ServiceLayer.Response import Response
 from ServiceLayer.Objects.ServiceUser import ServiceUser
 from ServiceLayer.Objects.ServiceProject import ServiceProject
-from apiRequestBodies import addProjectBody, changePasswordBody, changeUsernameBody, deleteUserBody, getProjectBody, logOutBody, registerLoginBody
+from apiRequestBodies import addProjectBody, changePasswordBody, changeProjectDescriptionBody, changeProjectLanguagesBody, changeProjectNameBody, changeProjectToolsBody, changeUsernameBody, deleteProjectBody, \
+     deleteUserBody, getProjectBody, logOutBody, markProjectBody, registerLoginBody
 
 app: Flask = Flask(__name__)
 service: Service = Service()
@@ -38,7 +39,7 @@ def registerUser():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/log_in", methods=["GET"])
+@app.route("/api/log_in", methods=["PATCH"])
 def logIn():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
@@ -59,7 +60,7 @@ def logIn():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/log_out", methods=["GET"])
+@app.route("/api/log_out", methods=["PATCH"])
 def logOut():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
@@ -79,7 +80,7 @@ def logOut():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/change_username", methods=["POST"])
+@app.route("/api/change_username", methods=["PATCH"])
 def changeUsername():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
@@ -103,7 +104,7 @@ def changeUsername():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/change_password", methods=["POST"])
+@app.route("/api/change_password", methods=["PATCH"])
 def changePassword():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
@@ -127,7 +128,7 @@ def changePassword():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/delete_user", methods=["POST"])
+@app.route("/api/delete_user", methods=["DELETE"])
 def deleteUser():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
@@ -197,7 +198,135 @@ def addProject():
 
     return jsonify(response.toDict()), status
 
+@app.route("/api/delete_project", methods=["DELETE"])
+def deleteProject():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str
+    }
 
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: deleteProjectBody = deleteProjectBody(request.get_json())
+    
+    response: Response[bool] = service.deleteProject(body["username"], body["projectName"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/change_project_name", methods=["PATCH"])
+def changeProjectName():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str,
+        "newProjectName": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: changeProjectNameBody = changeProjectNameBody(request.get_json())
+    
+    response: Response[bool] = service.changeProjectName(body["username"], body["projectName"], body["newProjectName"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/change_project_description", methods=["PATCH"])
+def changeProjectDescription():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str,
+        "description": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: changeProjectDescriptionBody = changeProjectDescriptionBody(request.get_json())
+    
+    response: Response[bool] = service.changeProjectDescription(body["username"], body["projectName"], body["description"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/change_project_languages", methods=["PATCH"])
+def changeProjectLanguages():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str,
+        "languages": List[str]
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: changeProjectLanguagesBody = changeProjectLanguagesBody(request.get_json())
+    
+    response: Response[bool] = service.changeProjectLanguages(body["username"], body["projectName"], body["languages"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/change_project_tools", methods=["PATCH"])
+def changeProjectTools():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str,
+        "tools": List[str]
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: changeProjectToolsBody = changeProjectToolsBody(request.get_json())
+    
+    response: Response[bool] = service.changeProjectTools(body["username"], body["projectName"], body["tools"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
+
+@app.route("/api/mark_project", methods=["PATCH"])
+def markProjectCompleteIncomplete():
+    data: dict = request.get_json()
+    fields: Dict[str, type] = {
+        "username": str,
+        "projectName": str
+    }
+
+    if not validateRequestSchema(data, fields):
+        return {"error": "bad request body"}, 400
+    
+    body: markProjectBody = markProjectBody(request.get_json())
+    
+    response: Response[bool] = service.markProjectCompleteIncomplete(body["username"], body["projectName"])
+    status: int = 200
+
+    if response.isError():
+        status = 400
+
+    return jsonify(response.toDict()), status
 
 
 
@@ -215,7 +344,14 @@ def validateRequestSchema(request: dict, fields: Dict[str, type]) -> bool:
         typ: type = fields[field]
 
         if type(request[field]) is not typ:
-            return False
+            if typ is List[str]:
+                if not stringListCase(request[field]):
+                    return False
+            else:
+                return False
+
+
+            
         
     for key in request:
         if key not in fields:
@@ -223,7 +359,16 @@ def validateRequestSchema(request: dict, fields: Dict[str, type]) -> bool:
         
     return True
     
+
+def stringListCase(l) -> bool:
+    if type(l) is not list:
+        return False
     
+    for item in l:
+        if type(item) is not str:
+            return False
+        
+    return True
     
     
 
