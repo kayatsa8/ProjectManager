@@ -20,5 +20,8 @@ class ServiceProject:
             "languages": self.languages,
             "tools": self.tools,
             "completed": self.completed,
-            "completionDate": self.completionDate
+            "completionDate": self.parseDate(d=self.completionDate)
         }
+    
+    def parseDate(self ,d: date) -> str:
+        return str(d.day) + "/" + str(d.month) + "/" + str(d.year)
