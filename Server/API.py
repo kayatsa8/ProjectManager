@@ -1,6 +1,7 @@
 from typing import Dict, List
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from ServiceLayer.Service import Service
 from ServiceLayer.Response import Response
@@ -10,7 +11,10 @@ from apiRequestBodies import addProjectBody, changePasswordBody, changeProjectDe
      deleteUserBody, getProjectBody, logOutBody, markProjectBody, registerLoginBody
 
 app: Flask = Flask(__name__)
+CORS(app)
 service: Service = Service()
+
+
 
 # API
 
@@ -34,8 +38,8 @@ def registerUser():
     response: Response[bool] = service.register(body["username"], body["password"])
     status: int = 201
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -55,8 +59,8 @@ def logIn():
     response: Response[ServiceUser] = service.logIn(body["username"], body["password"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -75,8 +79,8 @@ def logOut():
     response: Response[bool] = service.logOut(body["username"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -99,8 +103,8 @@ def changeUsername():
                                                       body["password"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -123,8 +127,8 @@ def changePassword():
                                                       body["newPassword"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -145,8 +149,8 @@ def deleteUser():
                                                   body["password"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -167,8 +171,8 @@ def getProject():
                                                             body["projectName"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -193,8 +197,8 @@ def addProject():
                                                   body["tools"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -214,8 +218,8 @@ def deleteProject():
     response: Response[bool] = service.deleteProject(body["username"], body["projectName"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -236,8 +240,8 @@ def changeProjectName():
     response: Response[bool] = service.changeProjectName(body["username"], body["projectName"], body["newProjectName"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -258,8 +262,8 @@ def changeProjectDescription():
     response: Response[bool] = service.changeProjectDescription(body["username"], body["projectName"], body["description"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -280,8 +284,8 @@ def changeProjectLanguages():
     response: Response[bool] = service.changeProjectLanguages(body["username"], body["projectName"], body["languages"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -302,8 +306,8 @@ def changeProjectTools():
     response: Response[bool] = service.changeProjectTools(body["username"], body["projectName"], body["tools"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
@@ -323,8 +327,8 @@ def markProjectCompleteIncomplete():
     response: Response[bool] = service.markProjectCompleteIncomplete(body["username"], body["projectName"])
     status: int = 200
 
-    if response.isError():
-        status = 400
+    # if response.isError():
+    #     status = 400
 
     return jsonify(response.toDict()), status
 
