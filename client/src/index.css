@@ -9,24 +9,24 @@
 }
 
 /* LogIn */
-.login {
+.login, .register {
 max-width: 400px;
 margin: 0 auto;
 text-align: center;
 }
-.login h2 {
+.login h2 , .register h2{
     font-size: 30px;
     color: #5604d9;
     margin-bottom: 50px;
     margin-top: 100px;
   }
 
-.login label {
+.login label, .register label {
     text-align: left;
     display: block;
     margin-bottom: 15px;
 }
-.login input {
+.login input, .register input {
     width: 100%;
     padding: 6px 10px;
     margin: 10px 0;
@@ -35,7 +35,7 @@ text-align: center;
     display: block;
     margin-bottom: 20px;
 }
-.login button {
+.login button, .register button {
     background: #5604d9;
     color: #fff;
     border: 0;
@@ -46,10 +46,10 @@ text-align: center;
     padding: 10px 20px;
     font-size: 14px;
 }
-.login button:hover {
+.login button:hover, .register button:hover {
     color: #09ff00;
 }
-.login .error {
+.login .error, .register .error {
     color: crimson;
     margin-top: 15px;
 }
@@ -63,4 +63,7 @@ text-align: center;
 }
 .login .links a:hover {
     color: #09ff00;
+}
+.register .backButton {
+    text-align: left;
 }
