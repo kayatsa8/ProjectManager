@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* base styles */
+* {
+    margin: 0;
+    font-family: "Quicksand";
+    color: #ffffff;
+    background-color: #000;
+}
+
+/* LogIn */
+.login {
+max-width: 400px;
+margin: 0 auto;
+text-align: center;
+}
+.login h2 {
+    font-size: 30px;
+    color: #5604d9;
+    margin-bottom: 50px;
+    margin-top: 100px;
+  }
+
+.login label {
+    text-align: left;
+    display: block;
+    margin-bottom: 15px;
+}
+.login input {
+    width: 100%;
+    padding: 6px 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: block;
+    margin-bottom: 20px;
+}
+.login button {
+    background: #5604d9;
+    color: #fff;
+    border: 0;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+.login button:hover {
+    color: #09ff00;
+}
+.login .error {
+    color: crimson;
+    margin-top: 15px;
+}
+.login .links {
+    text-align: left;
+    margin-top: 30px
+}
+.login .links a {
+    color: #4da5f7;
+    text-decoration: none;
+}
+.login .links a:hover {
+    color: #09ff00;
+}
