@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const LogIn = () => {
 
@@ -10,6 +11,9 @@ const LogIn = () => {
     const [isPending, setIsPending] = useState(false);
 
     const [response, setResponse] = useState({});
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const history = useHistory();
 
 
     const sendLogInRequest = () => {
@@ -33,6 +37,7 @@ const LogIn = () => {
             setResponse(serverResponse);
             setIsPending(false);
             setError(serverResponse.message);
+            setLoggedIn(serverResponse.value);
         })
         .catch((err) => {
             setError(err.message);
@@ -43,8 +48,8 @@ const LogIn = () => {
     }
 
     useEffect(() => {
-        if(!response.error){
-            console.log(response);
+        if(!response.error && loggedIn){
+            history.push("/home");
         }
     }, [response]);
 
