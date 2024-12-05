@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Generic, Optional, TypeVar
 from ServiceLayer.Objects.ServiceUser import ServiceUser
 from ServiceLayer.Objects.ServiceProject import ServiceProject
 
@@ -8,13 +8,13 @@ T = TypeVar("T")
 class Response(Generic[T]):
 
     # should be private
-    def __init__(self, value: T, error: bool, message: str) -> None:
+    def __init__(self, value: Optional[T], error: bool, message: str) -> None:
         super().__init__()
-        self.__value: T = value
+        self.__value: Optional[T] = value
         self.__error: bool = error
         self.__message: str = message
 
-    def getValue(self) -> T:
+    def getValue(self) -> Optional[T]:
         return self.__value
     
     def isError(self) -> bool:
