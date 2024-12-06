@@ -14,6 +14,10 @@ const useFetch = (url, method, dataToSend = {}) => {
   const body = getRequestBoby(method, dataToSend);
 
   useEffect(() => {
+    if(!url){
+      return;
+    }
+
     fetch(url, body)
     .then(res => {
       if(!res.ok){

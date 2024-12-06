@@ -1,10 +1,33 @@
+import { useState } from "react";
+import useFetch from "./useFetch"
 
 
 function App() {
+  const [url, setUrl] = useState(null);
+  const {response, isPending, error} = useFetch(url, "PATCH", {username: "admin", password: "admin"});
+
+  const handleClick = () => {
+    setUrl(u => u = "http://localhost:5000//api/log_in");
+    console.log(response);
+  };
+
+
   return (
     <>
       <div>
-        hi
+        <button onClick={() => handleClick()}>click</button>
+
+        {response &&
+          <div>
+            name: {response.value.username}
+
+            {response.value.projects.map(project => (
+              <div key={project}>
+                <p>project: {project}</p>
+              </div>
+            ))}
+          </div>
+        }
       </div>
     </>
   )
