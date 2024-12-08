@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
  */
 const useFetch = (url, method, dataToSend = {}) => {
   const [response, setResponse] = useState(null);
-  const [isPending, setIsPending] = useState(true);
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
   const body = getRequestBoby(method, dataToSend);
 
@@ -17,6 +17,8 @@ const useFetch = (url, method, dataToSend = {}) => {
     if(!url){
       return;
     }
+
+    setIsPending(true);
 
     fetch(url, body)
     .then(res => {
