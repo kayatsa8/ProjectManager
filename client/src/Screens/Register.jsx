@@ -24,6 +24,22 @@ const Register = () => {
                 buttonName="Register"
                 onButtonPressed={onButtonPressed}
             />
+
+            {response && response.error &&
+                <div>
+                    server error: {response.message}
+                </div>
+            }
+
+            {error &&
+                <div>
+                    error: {error}
+                </div>
+            }
+
+            <div>
+                bro
+            </div>
         </div>
      );
 }
