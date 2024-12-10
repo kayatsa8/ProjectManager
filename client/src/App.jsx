@@ -8,8 +8,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* TODO: navigation of some sort */}
-
         <div className="content">
           <Switch>
 
