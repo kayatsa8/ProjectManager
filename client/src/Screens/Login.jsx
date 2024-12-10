@@ -1,11 +1,13 @@
 import { useState } from "react";
 import UsernamePassword from "./UsernamePassword";
 import useFetch from "../useFetch";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
     const [url, setUrl] = useState(null);
     const [content, setContent] = useState({username: "", password: ""});
     const {response, isPending, error} = useFetch(url, "PATCH", content);
+    const history = useHistory();
 
     const onButtonPressed = (username, password) => {
         setContent(() => {return {username: username, password: password}});
@@ -16,7 +18,7 @@ const Login = () => {
     };
 
     const handleRegisterButton = () => {
-        // TODO: navigate to register page
+        history.push("/register");
     };
 
 
@@ -31,7 +33,7 @@ const Login = () => {
 
             {response && response.error &&
                 <div>
-                    server error: {response.value.message}
+                    server error: {response.message}
                 </div>
             }
 

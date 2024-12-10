@@ -1,13 +1,33 @@
-import { useState } from "react";
-import useFetch from "./useFetch"
-import UsernamePassword from "./Screens/UsernamePassword";
-import Register from "./Screens/Register";
-import Login from "./Screens/Login";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Login from './Screens/Login';
+import Register from './Screens/Register';
+import NotFound from './Screens/NotImplemented';
 
 
 function App() {
   return (
-    <Login />
+    <Router>
+      <div className="App">
+        <div className="content">
+          <Switch>
+
+            <Route exact path="/">
+              <Login />
+            </Route>
+
+            <Route exact path="/register">
+              <Register />
+            </Route>
+
+            <Route path="*">
+              <NotFound />
+            </Route>
+            
+          </Switch>
+        </div>
+
+      </div>
+    </Router>
   );
 }
 
