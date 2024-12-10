@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './Screens/Login';
 import Register from './Screens/Register';
 import NotFound from './Screens/NotImplemented';
+import HomePage from './Screens/HomePage';
 
 
 function App() {
@@ -17,6 +18,10 @@ function App() {
 
             <Route exact path="/register">
               <Register />
+            </Route>
+
+            <Route exact path="/home">
+              <HomePage />
             </Route>
 
             <Route path="*">
