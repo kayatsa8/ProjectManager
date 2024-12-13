@@ -43,8 +43,7 @@ const Login = () => {
             return;
         }
 
-        
-        history.push("/home");
+        history.push("/home", {username: content.username});
 
     }, [response]);
 
