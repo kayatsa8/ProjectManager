@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UsernamePassword from "./UsernamePassword";
 import useFetch from "../useFetch";
 import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [url, setUrl] = useState(null);
@@ -11,12 +13,65 @@ const Register = () => {
 
 
     const onButtonPressed = (username, password) => {
-        setContent({username: username, password: password});
+        setContent(() => {return {username: username, password: password}});
 
-        setUrl(null);
         setUrl(() => "http://localhost:5000/api/register_user");
-        history.push("/");
     };
+
+    useEffect(() => {
+        if(!response){
+            return;
+        }
+
+        if(response.error){
+            toast.error(response.message, {
+                position: "bottom-left",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+
+            setUrl(() => null);
+
+            return;
+        }
+
+        toast.success('New user was created!', {
+            position: "bottom-left",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+        history.push("/");
+
+    }, [response])
+
+    useEffect(() => {
+        if(!error){
+            return;
+        }
+
+        toast.error(error, {
+            position: "bottom-left",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+
+        setUrl(() => null);
+    }, [error]);
 
 
     return ( 
@@ -26,19 +81,6 @@ const Register = () => {
                 buttonName="Register"
                 onButtonPressed={onButtonPressed}
             />
-
-            {response && response.error &&
-                <div>
-                    server error: {response.message}
-                </div>
-            }
-
-            {error &&
-                <div>
-                    error: {error}
-                </div>
-            }
-
         </div>
      );
 }
