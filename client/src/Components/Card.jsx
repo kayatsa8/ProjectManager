@@ -1,6 +1,8 @@
-const Card = () => {
+const Card = ({projectName}) => {
     return (
-        
+        <div>
+            {projectName}
+        </div>
     );
 }
  
