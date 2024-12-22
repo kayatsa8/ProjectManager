@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import UsernamePassword from "./UsernamePassword";
+import UsernamePassword from "../Components/UsernamePassword";
 import useFetch from "../useFetch";
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
