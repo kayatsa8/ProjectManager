@@ -24,7 +24,7 @@ const HomePage = () => {
 
     const handleAddProject = () => {
         console.log("add project");
-    }
+    };
 
     useEffect(() => {
         if(!response){
