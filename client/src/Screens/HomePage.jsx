@@ -18,6 +18,10 @@ const HomePage = () => {
         setUrl("http://localhost:5000/api/log_out");
     };
 
+    const handleSettings = () => {
+        console.log("handle settings");
+    };
+
     useEffect(() => {
         if(!response){
             return;
@@ -68,6 +72,7 @@ const HomePage = () => {
     return (
         <div>
             <button onClick={() => handleLogout()}>Logout</button>
+            <button onClick={() => handleSettings()}>Settings</button>
             <ProjectList projects={location.state.projects}/>
         </div>
     );
