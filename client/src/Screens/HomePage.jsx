@@ -23,7 +23,7 @@ const HomePage = () => {
     };
 
     const handleAddProject = () => {
-        console.log("add project");
+        history.push("/add_project")
     };
 
     useEffect(() => {
