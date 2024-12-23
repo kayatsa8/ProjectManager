@@ -1,21 +1,29 @@
-import { useState, useEffect } from "react";
-import UsernamePassword from "../Components/UsernamePassword";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from "../useFetch";
-import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ProjectList from "../Components/ProjectList";
 
-const Register = () => {
+const HomePage = () => {
     const [url, setUrl] = useState(null);
-    const [content, setContent] = useState({username:"", password: ""});
-    const {response, isPending, error} = useFetch(url, "POST", content);
+    const [content, setContent] = useState({username: ""});
+    const {response, isPending, error} = useFetch(url, "PATCH", content);
     const history = useHistory();
+    const location = useLocation();
 
+    const handleLogout = () => {
+        setContent({username: location.state.username});
+        setUrl("http://localhost:5000/api/log_out");
+    };
 
-    const onButtonPressed = (username, password) => {
-        setContent(() => {return {username: username, password: password}});
+    const handleSettings = () => {
+        console.log("handle settings");
+    };
 
-        setUrl(() => "http://localhost:5000/api/register_user");
+    const handleAddProject = () => {
+        console.log("add project");
     };
 
     useEffect(() => {
@@ -40,19 +48,9 @@ const Register = () => {
             return;
         }
 
-        toast.success('New user was created!', {
-            position: "bottom-left",
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-        });
         history.push("/");
 
-    }, [response])
+    }, [response]);
 
     useEffect(() => {
         if(!error){
@@ -74,15 +72,15 @@ const Register = () => {
     }, [error]);
 
 
-    return ( 
+
+    return (
         <div>
-            <UsernamePassword
-                headline="Register"
-                buttonName="Register"
-                onButtonPressed={onButtonPressed}
-            />
+            <button onClick={() => handleLogout()}>Logout</button>
+            <button onClick={() => handleSettings()}>Settings</button>
+            <ProjectList projects={location.state.projects}/>
+            <button onClick={() => handleAddProject()}>Add Project</button>
         </div>
-     );
+    );
 }
  
-export default Register;
+export default HomePage;
