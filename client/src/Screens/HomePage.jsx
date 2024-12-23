@@ -68,7 +68,7 @@ const HomePage = () => {
     return (
         <div>
             <button onClick={() => handleLogout()}>Logout</button>
-            <ProjectList/>
+            <ProjectList projects={location.state.projects}/>
         </div>
     );
 }

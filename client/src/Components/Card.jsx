@@ -1,7 +1,9 @@
 const Card = ({projectName}) => {
     return (
         <div>
-            {projectName}
+            <h2>
+                {projectName}
+            </h2>
         </div>
     );
 }
