@@ -22,6 +22,10 @@ const HomePage = () => {
         console.log("handle settings");
     };
 
+    const handleAddProject = () => {
+        console.log("add project");
+    }
+
     useEffect(() => {
         if(!response){
             return;
@@ -74,6 +78,7 @@ const HomePage = () => {
             <button onClick={() => handleLogout()}>Logout</button>
             <button onClick={() => handleSettings()}>Settings</button>
             <ProjectList projects={location.state.projects}/>
+            <button onClick={() => handleAddProject()}>Add Project</button>
         </div>
     );
 }
