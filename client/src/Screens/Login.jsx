@@ -43,8 +43,6 @@ const Login = () => {
             return;
         }
 
-        console.log(response)
-
         history.push("/home", {username: response.value.username, projects: response.value.projects});
 
     }, [response]);
