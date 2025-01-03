@@ -32,7 +32,7 @@ function App() {
               <AddProject />
             </Route>
 
-            <Route exact path="/project/:project">
+            <Route exact path="/project/:projectName">
               <ProjectView />
             </Route>
 
