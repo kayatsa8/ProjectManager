@@ -6,6 +6,7 @@ import HomePage from './Screens/HomePage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddProject from './Screens/AddProject';
+import ProjectView from './Screens/ProjectView';
 
 
 function App() {
@@ -29,6 +30,10 @@ function App() {
 
             <Route exact path="/add_project">
               <AddProject />
+            </Route>
+
+            <Route exact path="/project/:project">
+              <ProjectView />
             </Route>
 
             <Route path="*">
