@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import useFetch from "../useFetch";
 import { toast } from 'react-toastify';
+import BackHome from "../Components/BackHome";
 
 
 
@@ -17,11 +18,6 @@ const AddProject = () => {
     const [url, setUrl] = useState(null);
     const [content, setContent] = useState({});
     const {response, isPending, error} = useFetch(url, "POST", content);
-
-
-    const handleBack = () => {
-        history.push("/home", {username: location.state.username, projects: location.state.projects})
-    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -102,7 +98,7 @@ const AddProject = () => {
 
     return (
         <div>
-            <button onClick={() => handleBack()}>Back</button>
+            <BackHome username={location.state.username} projects={location.state.projects}/>
             
             <form onSubmit={(event) => handleSubmit(event)}>
 
