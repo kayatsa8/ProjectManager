@@ -7,7 +7,7 @@ const ProjectList = ({projects, username}) => {
             {
                 projects.map((project) => (
                     <div key={project}>
-                        <Link to={{pathname: `/project/${project}`, state: {username: username}}}>
+                        <Link to={{pathname: `/project/${project}`, state: {username: username, projects: projects}}}>
                             <Card projectName={project}/>
                         </Link>
                     </div>
