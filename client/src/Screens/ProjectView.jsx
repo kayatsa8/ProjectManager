@@ -4,6 +4,7 @@ import BackHome from '../Components/BackHome';
 import useFetch from '../useFetch';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import ChangeStatusButton from '../Components/ChangeStatusButton';
 
 
 
@@ -15,6 +16,7 @@ const ProjectView = () => {
     const {response, isPending, error} = useFetch("http://localhost:5000/api/get_project", "POST", content);
     const [languages, setLanguages] = useState("");
     const [tools, setTools] = useState("");
+    const [isCompleted, setIsCompleted] = useState(false);
 
 
     useEffect(() => {
@@ -55,6 +57,8 @@ const ProjectView = () => {
             return;
         }
 
+        setIsCompleted(() => response.value.completed);
+
         setLanguages(() => {
             let ls = response.value.languages.reduce((langStr, curr) => {return langStr + ", " + curr;}, "");
             ls = ls.slice(2);
@@ -67,7 +71,7 @@ const ProjectView = () => {
             return ls;
         });
 
-    }, [response])
+    }, [response]);
 
 
 
@@ -80,13 +84,20 @@ const ProjectView = () => {
                 <div>
                     <h1>{projectName}</h1>
 
-                    <p>Status: {response.value.completed ? "Completed" : "Incomplete"}</p>
+                    <p>Status: {isCompleted ? "Completed" : "Incomplete"}</p>
 
                     <p>{response.value.description !== "" ? response.value.description : "No Description"}</p>
 
                     <p>Languages: {languages}</p>
 
                     <p>Tools: {tools}</p>
+
+
+                    <ChangeStatusButton
+                        projectName={response.value.name}
+                        username={location.state.username}
+                        setIsCompleted={setIsCompleted}
+                    />
                 </div>
             }
         </div>

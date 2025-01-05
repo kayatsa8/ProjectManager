@@ -23,7 +23,7 @@ const useFetch = (url, method, dataToSend = {}) => {
     fetch(url, body)
     .then(res => {
       if(!res.ok){
-        throw Error("could not send the message to the server");
+        return res.text().then(text => { throw new Error(text) });
       }
 
       return res.json();
