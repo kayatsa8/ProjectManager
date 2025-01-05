@@ -320,7 +320,6 @@ def markProjectCompleteIncomplete():
     }
 
     if not validateRequestSchema(data, fields):
-        print(data.keys())
         return "error: bad request body", 400
     
     body: markProjectBody = markProjectBody(request.get_json())
