@@ -22,8 +22,16 @@ const AddProject = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const langList = languages.split(", ");
-        const toolList = tools.split(", ");
+        let langList = languages.split(", ");
+        let toolList = tools.split(", ");
+
+        if(langList.length === 1 && langList[0] === ""){
+            langList = [];
+        }
+
+        if(toolList.length === 1 && toolList[0] === ""){
+            toolList = [];
+        }
 
         setContent(() => {return {
             username: location.state.username,
