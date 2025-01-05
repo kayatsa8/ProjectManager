@@ -154,7 +154,7 @@ def deleteUser():
 
     return jsonify(response.toDict()), status
 
-@app.route("/api/get_project", methods=["GET"])
+@app.route("/api/get_project", methods=["POST"])
 def getProject():
     data: dict = request.get_json()
     fields: Dict[str, type] = {
