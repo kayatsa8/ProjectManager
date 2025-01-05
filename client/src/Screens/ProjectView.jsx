@@ -12,7 +12,8 @@ const ProjectView = () => {
     const location = useLocation();
     const {projectName} = useParams();
     const content = {username: location.state.username, projectName: projectName};
-    const {response, isPending, error} = useFetch("http://localhost:5000/api/get_project", "GET", content);
+    const {response, isPending, error} = useFetch("http://localhost:5000/api/get_project", "POST", content);
+    const [languages, setLanguages] = useState("");
 
 
     useEffect(() => {
@@ -49,7 +50,11 @@ const ProjectView = () => {
                 progress: undefined,
                 theme: "colored",
             });
+
+            return;
         }
+
+        setLanguages(() => response.value.languages.reduce((langStr, curr) => {return langStr + ", " +curr}), "");
 
     }, [response])
 
@@ -60,7 +65,17 @@ const ProjectView = () => {
         <div>
             <BackHome username={location.state.username} projects={location.state.projects}/>
 
-            <h1>{projectName}</h1>
+            {response && 
+                <div>
+                    <h1>{projectName}</h1>
+
+                    <p>Status: {response.value.completed ? "Completed" : "Incomplete"}</p>
+
+                    <p>{response.value.description}</p>
+
+                    <p>Languages: {languages}</p>
+                </div>
+            }
         </div>
     );
 }
