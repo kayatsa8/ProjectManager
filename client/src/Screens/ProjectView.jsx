@@ -14,6 +14,7 @@ const ProjectView = () => {
     const content = {username: location.state.username, projectName: projectName};
     const {response, isPending, error} = useFetch("http://localhost:5000/api/get_project", "POST", content);
     const [languages, setLanguages] = useState("");
+    const [tools, setTools] = useState("");
 
 
     useEffect(() => {
@@ -60,6 +61,12 @@ const ProjectView = () => {
             return ls;
         });
 
+        setTools(() => {
+            let ls = response.value.tools.reduce((toolStr, curr) => toolStr + ", " + curr, "");
+            ls = ls.slice(2);
+            return ls;
+        });
+
     }, [response])
 
 
@@ -75,9 +82,11 @@ const ProjectView = () => {
 
                     <p>Status: {response.value.completed ? "Completed" : "Incomplete"}</p>
 
-                    <p>{response.value.description}</p>
+                    <p>{response.value.description !== "" ? response.value.description : "No Description"}</p>
 
                     <p>Languages: {languages}</p>
+
+                    <p>Tools: {tools}</p>
                 </div>
             }
         </div>
