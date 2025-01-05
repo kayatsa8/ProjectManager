@@ -54,7 +54,11 @@ const ProjectView = () => {
             return;
         }
 
-        setLanguages(() => response.value.languages.reduce((langStr, curr) => {return langStr + ", " +curr}), "");
+        setLanguages(() => {
+            let ls = response.value.languages.reduce((langStr, curr) => {return langStr + ", " + curr;}, "");
+            ls = ls.slice(2);
+            return ls;
+        });
 
     }, [response])
 
