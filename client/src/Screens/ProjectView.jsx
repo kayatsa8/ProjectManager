@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import ChangeStatusButton from '../Components/ChangeStatusButton';
 import DeleteProjectButton from '../Components/DeleteProjectButton';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 
 
@@ -18,6 +19,7 @@ const ProjectView = () => {
     const [languages, setLanguages] = useState("");
     const [tools, setTools] = useState("");
     const [isCompleted, setIsCompleted] = useState(false);
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -76,6 +78,15 @@ const ProjectView = () => {
 
 
 
+    const handleEdit = () => {
+        history.push(`/edit/${projectName}`, {
+            username: location.state.username,
+            projects: location.state.projects
+        });
+    };
+
+
+
 
     return (
         <div>
@@ -99,6 +110,8 @@ const ProjectView = () => {
                         username={location.state.username}
                         setIsCompleted={setIsCompleted}
                     />
+
+                    <button onClick={() => handleEdit()}>Edit</button>
 
                     <DeleteProjectButton
                         username={location.state.username}
