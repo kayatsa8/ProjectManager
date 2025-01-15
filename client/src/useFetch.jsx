@@ -19,6 +19,7 @@ const useFetch = (url, method, dataToSend = {}) => {
     }
 
     setIsPending(true);
+    setError(null);
 
     fetch(url, body)
     .then(res => {

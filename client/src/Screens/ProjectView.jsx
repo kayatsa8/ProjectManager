@@ -5,6 +5,7 @@ import useFetch from '../useFetch';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import ChangeStatusButton from '../Components/ChangeStatusButton';
+import DeleteProjectButton from '../Components/DeleteProjectButton';
 
 
 
@@ -97,6 +98,12 @@ const ProjectView = () => {
                         projectName={response.value.name}
                         username={location.state.username}
                         setIsCompleted={setIsCompleted}
+                    />
+
+                    <DeleteProjectButton
+                        username={location.state.username}
+                        projectName={response.value.name}
+                        projects={location.state.projects}
                     />
                 </div>
             }
