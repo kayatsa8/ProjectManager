@@ -81,7 +81,8 @@ const ProjectView = () => {
     const handleEdit = () => {
         history.push(`/edit/${projectName}`, {
             username: location.state.username,
-            projects: location.state.projects
+            projects: location.state.projects,
+            project: response.value
         });
     };
 
