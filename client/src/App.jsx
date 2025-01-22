@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AddProject from './Screens/AddProject';
 import ProjectView from './Screens/ProjectView';
 import EditProject from './Screens/EditProject';
+import UserSettings from './Screens/UserSettings';
 
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
 
             <Route exact path="/edit/:projectName">
               <EditProject />
+            </Route>
+
+            <Route exact path="/settings/">
+              <UserSettings />
             </Route>
 
             <Route path="*">
