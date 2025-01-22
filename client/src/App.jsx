@@ -42,7 +42,7 @@ function App() {
               <EditProject />
             </Route>
 
-            <Route exact path="/settings/">
+            <Route exact path="/settings">
               <UserSettings />
             </Route>
 
