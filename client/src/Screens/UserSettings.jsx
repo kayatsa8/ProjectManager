@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import BackHome from '../Components/BackHome';
 import { useState } from 'react';
 import EditButton from '../Components/EditButton';
+import DeleteUserButton from '../Components/DeleteUserButton';
 
 const UserSettings = () => {
     const location = useLocation();
@@ -78,7 +79,10 @@ const UserSettings = () => {
                 doAfter={afterPassword}
             />
 
-
+            <DeleteUserButton
+                getUsername={() => location.state.username}
+                getPassword={() => password}
+            />
 
 
 
