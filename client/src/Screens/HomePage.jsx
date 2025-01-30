@@ -19,7 +19,7 @@ const HomePage = () => {
     };
 
     const handleSettings = () => {
-        console.log("handle settings");
+        history.push("/settings", {username: location.state.username, projects: location.state.projects});
     };
 
     const handleAddProject = () => {
