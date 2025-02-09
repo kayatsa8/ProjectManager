@@ -4,6 +4,7 @@ import useFetch from "../useFetch";
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../css/login_register.css'
 
 const Login = () => {
     const [url, setUrl] = useState(null);
@@ -68,13 +69,13 @@ const Login = () => {
 
 
     return (
-        <div>
+        <div className="login_register">
             <UsernamePassword 
                 headline="Login"
                 buttonName="Login"
                 onButtonPressed={(username, password) => onButtonPressed(username, password)}
             />
-            <button onClick={handleRegisterButton}>Register</button>
+            <button className="toRegister" onClick={handleRegisterButton}>Register</button>
 
             {isPending && <div>pending...</div>}
         </div>

@@ -1,0 +1,43 @@
+.login_register{    
+    display: flex;
+    flex-direction: column;  /* Stack elements vertically */
+    justify-content: center; /* Centers all elements vertically */
+    align-items: center;     /* Centers elements horizontally */
+    text-align: center;
+    height: 100vh;
+}
+
+.user_password{
+    margin-bottom: auto;
+    margin-top: 100px;
+}
+
+.user_password h1{
+    font-size: 6rem;
+}
+
+.user_password label{
+    display: block;
+    margin-bottom: 5px; /* Adds spacing between elements */
+    font-size: 1.5rem;
+    text-align: left;
+    font-weight: bold;
+}
+.user_password input{
+    display: block;
+    width: 100%; /* Optional: Makes elements take full width */
+    margin-bottom: 20px; /* Adds spacing between elements */
+    font-size: 1.5rem;
+}
+
+.user_password button{
+    display: block;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    width: 100%;
+    background-color: blueviolet;
+}
+
+.toRegister{
+
+}
