@@ -33,6 +33,7 @@
     background-color: rgb(157, 209, 255);
     border-radius: 8px;
     width: 100%;
+    cursor: pointer;
 }
 
 .toRegister {
@@ -40,4 +41,10 @@
     background-color: rgb(157, 209, 255);
     border-radius: 8px;
     width: 100%;
+    cursor: pointer;
+}
+
+.login_pending{
+    font-size: 28px;
+    margin-top: 20px;
 }

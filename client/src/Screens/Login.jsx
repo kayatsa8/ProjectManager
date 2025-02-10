@@ -77,7 +77,7 @@ const Login = () => {
             />
             <button className="toRegister" onClick={handleRegisterButton}>Register</button>
 
-            {isPending && <div>pending...</div>}
+            {isPending && <div className="login_pending">pending...</div>}
         </div>
     );
 }
