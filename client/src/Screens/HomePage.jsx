@@ -79,7 +79,7 @@ const HomePage = () => {
             <button className="logout" onClick={() => handleLogout()}>Logout</button>
             <button className="settings" onClick={() => handleSettings()}>Settings</button>
             <ProjectList projects={location.state.projects} username={location.state.username}/>
-            <button onClick={() => handleAddProject()}>Add Project</button>
+            <button className="add" onClick={() => handleAddProject()}>Add Project</button>
         </div>
     );
 }

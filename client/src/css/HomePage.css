@@ -12,3 +12,10 @@
     cursor: pointer;
     float: right;
 }
+
+.add{
+    background-color: rgb(109, 255, 47);
+    font-size: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+}
