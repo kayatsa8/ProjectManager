@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProjectList from "../Components/ProjectList";
+import '../css/HomePage.css'
 
 const HomePage = () => {
     const [url, setUrl] = useState(null);
@@ -75,8 +76,8 @@ const HomePage = () => {
 
     return (
         <div>
-            <button onClick={() => handleLogout()}>Logout</button>
-            <button onClick={() => handleSettings()}>Settings</button>
+            <button className="logout" onClick={() => handleLogout()}>Logout</button>
+            <button className="settings" onClick={() => handleSettings()}>Settings</button>
             <ProjectList projects={location.state.projects} username={location.state.username}/>
             <button onClick={() => handleAddProject()}>Add Project</button>
         </div>

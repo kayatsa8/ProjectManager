@@ -4,7 +4,6 @@ import useFetch from "../useFetch";
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../css/login_register.css'
 
 const Login = () => {
     const [url, setUrl] = useState(null);

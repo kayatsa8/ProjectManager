@@ -1,0 +1,14 @@
+.logout{
+    background-color: rgb(255, 71, 71);
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.settings{
+    background-color: rgb(255, 253, 147);
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    float: right;
+}
