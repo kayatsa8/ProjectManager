@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import "../css/BackHome.css"
 
 const BackHome = ({username, projects}) => {
     const history = useHistory();
@@ -10,7 +11,7 @@ const BackHome = ({username, projects}) => {
 
     
     return (
-        <button onClick={() => handleClick()}>Back</button>
+        <button className="back_home" onClick={() => handleClick()}>Back</button>
     );
 }
  
