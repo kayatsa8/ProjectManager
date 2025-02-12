@@ -3,10 +3,10 @@ import Card from "./Card";
 
 const ProjectList = ({projects, username}) => {
     return (
-        <div>
+        <div className="list">
             {
                 projects.map((project) => (
-                    <div key={project}>
+                    <div className="card" key={project}>
                         <Link to={{pathname: `/project/${project}`, state: {username: username, projects: projects}}}>
                             <Card projectName={project}/>
                         </Link>
@@ -19,5 +19,3 @@ const ProjectList = ({projects, username}) => {
  
 export default ProjectList;
 
-
-// https://medium.com/@hammadrao891/passing-data-via-links-in-react-a-guide-to-effective-data-transfer-1e0b030e2a12

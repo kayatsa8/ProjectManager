@@ -1,6 +1,6 @@
 const Card = ({projectName}) => {
     return (
-        <div>
+        <div className="card_inside">
             <h2>
                 {projectName}
             </h2>
