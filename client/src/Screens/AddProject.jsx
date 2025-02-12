@@ -109,7 +109,7 @@ const AddProject = () => {
         <div>
             <BackHome username={location.state.username} projects={location.state.projects}/>
             
-            <form onSubmit={(event) => handleSubmit(event)}>
+            <form className="add_form" onSubmit={(event) => handleSubmit(event)}>
 
                 <h1>Add Project</h1>
 
