@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useFetch from "../useFetch";
 import { toast } from 'react-toastify';
+import "../css/ProjectView.css";
 
 
 

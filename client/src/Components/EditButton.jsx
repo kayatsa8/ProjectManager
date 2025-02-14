@@ -71,7 +71,7 @@ const EditButton = ({toUrl, content, doBefore, doAfter}) => {
 
 
     return (
-        <button onClick={() => handleClick()}>Confirm Edit</button>
+        <button className="edit" onClick={() => handleClick()}>Confirm Edit</button>
     );
 }
  
