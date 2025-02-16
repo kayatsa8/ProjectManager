@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useHistory, useLocation, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import EditButton from "../Components/EditButton";
+import "../css/EditProject.css"
 
 const EditProject = () => {
     const {projectName} = useParams();
@@ -107,74 +108,76 @@ const EditProject = () => {
 
     return (
         <div>
-            <button onClick={() => handleBackButton()}>Back</button>
+            <button className="back_edit_project" onClick={() => handleBackButton()}>Back</button>
 
-            <h1>Edit Project</h1>
+            <div className="edit_form">
+                <h1>Edit Project</h1>
 
-            <label>Title:</label>
-            <input 
-                type="text"
-                value={newName}
-                onChange={(event) => {setNameNew(() => event.target.value)}}
-            />
-            <EditButton 
-                toUrl="http://localhost:5000/api/change_project_name"
-                content={{
-                    username: username,
-                    projectName: "",
-                    newProjectName: ""
-                }}
-                doBefore={beforeName}
-                doAfter={afterName}
-            />
+                <label>Title:</label>
+                <input 
+                    type="text"
+                    value={newName}
+                    onChange={(event) => {setNameNew(() => event.target.value)}}
+                />
+                <EditButton 
+                    toUrl="http://localhost:5000/api/change_project_name"
+                    content={{
+                        username: username,
+                        projectName: "",
+                        newProjectName: ""
+                    }}
+                    doBefore={beforeName}
+                    doAfter={afterName}
+                />
 
-            <label>Description:</label>
-            <textarea
-                value={newDesc}
-                onChange={(event) => {setNewDesc(() => event.target.value)}}
-            />
-            <EditButton 
-                toUrl="http://localhost:5000/api/change_project_description"
-                content={{
-                    username: username,
-                    projectName: projectName,
-                    description: ""
-                }}
-                doBefore={beforeDesciption}
-                doAfter={afterDescription}
-            />
+                <label>Description:</label>
+                <textarea
+                    value={newDesc}
+                    onChange={(event) => {setNewDesc(() => event.target.value)}}
+                />
+                <EditButton 
+                    toUrl="http://localhost:5000/api/change_project_description"
+                    content={{
+                        username: username,
+                        projectName: projectName,
+                        description: ""
+                    }}
+                    doBefore={beforeDesciption}
+                    doAfter={afterDescription}
+                />
 
-            <label>Languages:</label>
-            <textarea
-                value={newLangs}
-                onChange={(event) => {setNewLangs(() => event.target.value)}}
-            />
-            <EditButton
-                toUrl="http://localhost:5000/api/change_project_languages"
-                content={{
-                    username: username,
-                    projectName: projectName,
-                    languages: []
-                }}
-                doBefore={beforeLanguages}
-                doAfter={afterLanguages}
-            />
+                <label>Languages:</label>
+                <textarea
+                    value={newLangs}
+                    onChange={(event) => {setNewLangs(() => event.target.value)}}
+                />
+                <EditButton
+                    toUrl="http://localhost:5000/api/change_project_languages"
+                    content={{
+                        username: username,
+                        projectName: projectName,
+                        languages: []
+                    }}
+                    doBefore={beforeLanguages}
+                    doAfter={afterLanguages}
+                />
 
-            <label>Tools:</label>
-            <textarea
-                value={newTools}
-                onChange={(event) => {setNewTools(() => event.target.value)}}
-            />
-            <EditButton
-                toUrl="http://localhost:5000/api/change_project_tools"
-                content={{
-                    username: username,
-                    projectName: projectName,
-                    tools: []
-                }}
-                doBefore={beforeTools}
-                doAfter={afterTools}
-            />
+                <label>Tools:</label>
+                <textarea
+                    value={newTools}
+                    onChange={(event) => {setNewTools(() => event.target.value)}}
+                />
+                <EditButton
+                    toUrl="http://localhost:5000/api/change_project_tools"
+                    content={{
+                        username: username,
+                        projectName: projectName,
+                        tools: []
+                    }}
+                    doBefore={beforeTools}
+                    doAfter={afterTools}
+                />
+            </div>
 
         </div>
     );
