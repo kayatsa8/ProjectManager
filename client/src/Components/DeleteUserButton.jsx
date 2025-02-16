@@ -86,7 +86,7 @@ const DeleteUserButton = ({getUsername, getPassword}) => {
 
     return (
         <div>
-            {!sure && <button onClick={() => setSure(() => true)}>Delete User</button>}
+            {!sure && <button className="delete" onClick={() => setSure(() => true)}>Delete User</button>}
             {sure && <p>Are you sure?</p>}
             {sure && <button onClick={handleDelete}>Yes</button>}
             {sure && <button onClick={() => setSure(() => false)}>No</button>}

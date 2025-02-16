@@ -3,6 +3,7 @@ import BackHome from '../Components/BackHome';
 import { useState } from 'react';
 import EditButton from '../Components/EditButton';
 import DeleteUserButton from '../Components/DeleteUserButton';
+import "../css/UserSettings.css"
 
 const UserSettings = () => {
     const location = useLocation();
@@ -42,59 +43,59 @@ const UserSettings = () => {
         <div>
             <BackHome username={location.state.username} projects={location.state.projects} />
 
-            <h1>User Settings</h1>
+            <div className="user_settings">
+                <h1>User Settings</h1>
 
-            <label>New Username:</label>
-            <input
-                type="text"
-                value={newName}
-                onChange={((event) => setNewName(() => event.target.value))}
-            />
-            <EditButton
-                toUrl="http://localhost:5000/api/change_username"
-                content={{
-                    oldUsername: location.state.username,
-                    newUsername: "",
-                    password: ""
-                }}
-                doBefore={beforeName}
-                doAfter={afterName}
-            />
+                <label>New Username:</label>
+                <input
+                    type="text"
+                    value={newName}
+                    onChange={((event) => setNewName(() => event.target.value))}
+                />
+                <EditButton
+                    toUrl="http://localhost:5000/api/change_username"
+                    content={{
+                        oldUsername: location.state.username,
+                        newUsername: "",
+                        password: ""
+                    }}
+                    doBefore={beforeName}
+                    doAfter={afterName}
+                />
 
-            <label>New Password:</label>
-            <input
-                type="text"
-                value={newPassword}
-                placeholder="new password"
-                onChange={((event) => setNewPassword(() => event.target.value))}
-            />
-            <EditButton
-                toUrl="http://localhost:5000/api/change_password"
-                content={{
-                    username: location.state.username,
-                    oldPassword: "",
-                    newPassword: ""
-                }}
-                doBefore={beforePassword}
-                doAfter={afterPassword}
-            />
+                <label>New Password:</label>
+                <input
+                    type="text"
+                    value={newPassword}
+                    placeholder="new password"
+                    onChange={((event) => setNewPassword(() => event.target.value))}
+                />
+                <EditButton
+                    toUrl="http://localhost:5000/api/change_password"
+                    content={{
+                        username: location.state.username,
+                        oldPassword: "",
+                        newPassword: ""
+                    }}
+                    doBefore={beforePassword}
+                    doAfter={afterPassword}
+                />
 
-            <DeleteUserButton
-                getUsername={() => location.state.username}
-                getPassword={() => password}
-            />
+                <DeleteUserButton
+                    getUsername={() => location.state.username}
+                    getPassword={() => password}
+                />
 
+            </div>
 
-
-
-
-            <label>Confirm Your Action With Your Password:</label>
-            <input
-                type="text"
-                value={password}
-                onChange={((event) => setPassword(() => event.target.value))}
-            />
-            
+            <div className="confirm">
+                <label>Confirm Your Action With Your Password:</label>
+                <input
+                    type="text"
+                    value={password}
+                    onChange={((event) => setPassword(() => event.target.value))}
+                />
+            </div>
 
 
         </div>
