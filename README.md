@@ -205,6 +205,11 @@ The output of the server is always in the following format:
     "message": [an error message, if an exception was raised]
 }
 ```
+<br>
 
+## Screenshots
+
+![Register Page](Screenshots/register.png)
+![Login Page](Screenshots/login.png)
 
 
