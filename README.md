@@ -211,5 +211,11 @@ The output of the server is always in the following format:
 
 ![Register Page](Screenshots/register.png)
 ![Login Page](Screenshots/login.png)
+![Home Page](Screenshots/HomePage.png)
+![Project View](Screenshots/ProjectView.png)
+![Add Project](Screenshots/AddProject.png)
+![Edit Project](Screenshots/EditProject.png)
+![User Settings](Screenshots/UserSettings.png)
+
 
 
