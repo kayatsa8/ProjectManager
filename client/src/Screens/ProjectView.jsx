@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import ChangeStatusButton from '../Components/ChangeStatusButton';
 import DeleteProjectButton from '../Components/DeleteProjectButton';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import "../css/ProjectView.css";
 
 
 
@@ -94,31 +95,37 @@ const ProjectView = () => {
             <BackHome username={location.state.username} projects={location.state.projects}/>
 
             {response && 
-                <div>
+                <div className='project_view'>
                     <h1>{projectName}</h1>
 
-                    <p>Status: {isCompleted ? "Completed" : "Incomplete"}</p>
+                    <label>Status:</label>
+                    <p>{isCompleted ? "Completed" : "Incomplete"}</p>
 
+                    <label>Description:</label>
                     <p>{response.value.description !== "" ? response.value.description : "No Description"}</p>
 
-                    <p>Languages: {languages}</p>
+                    <label>Languages:</label>
+                    <p>{languages}</p>
 
-                    <p>Tools: {tools}</p>
+                    <label>Tools:</label>
+                    <p>{tools}</p>
 
 
-                    <ChangeStatusButton
-                        projectName={response.value.name}
-                        username={location.state.username}
-                        setIsCompleted={setIsCompleted}
-                    />
+                    <div className="project_view_buttons">
+                        <ChangeStatusButton
+                            projectName={response.value.name}
+                            username={location.state.username}
+                            setIsCompleted={setIsCompleted}
+                        />
 
-                    <button onClick={() => handleEdit()}>Edit</button>
+                        <button onClick={() => handleEdit()}>Edit</button>
 
-                    <DeleteProjectButton
-                        username={location.state.username}
-                        projectName={response.value.name}
-                        projects={location.state.projects}
-                    />
+                        <DeleteProjectButton
+                            username={location.state.username}
+                            projectName={response.value.name}
+                            projects={location.state.projects}
+                        />
+                    </div>
                 </div>
             }
         </div>

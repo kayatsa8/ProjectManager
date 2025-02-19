@@ -1,0 +1,54 @@
+.logout{
+    background-color: rgb(255, 71, 71);
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.settings{
+    background-color: rgb(255, 253, 147);
+    font-size: 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    float: right;
+}
+
+.add{
+    background-color: rgb(109, 255, 47);
+    font-size: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.list{
+    margin-top: 30px;
+    margin-bottom: 70px;
+    height: 70vh;
+    overflow: auto;
+}
+
+.card{
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid rgb(179, 179, 179);
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.card:hover{
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+    background-color: aliceblue;
+}
+
+.card a{
+    text-decoration: none;
+    color: rgb(170, 70, 237);
+}
+
+.card_inside{
+    padding: 1px;
+    border-radius: 8px;
+}

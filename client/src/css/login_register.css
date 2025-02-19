@@ -1,0 +1,50 @@
+.login_register{
+    height: 100vh;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.user_password{
+    text-align: center;
+}
+
+.user_password h1{
+    font-size: 80px;
+}
+
+.user_password label{
+    display: block;
+    text-align: left;
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.user_password input{
+    display: block;
+    text-align: left;
+    font-size: 28px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.user_password button{
+    font-size: 28px;
+    margin-bottom: 20px;
+    background-color: rgb(157, 209, 255);
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.toRegister {
+    font-size: 28px;
+    background-color: rgb(157, 209, 255);
+    border-radius: 8px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.login_pending{
+    font-size: 28px;
+    margin-top: 20px;
+}

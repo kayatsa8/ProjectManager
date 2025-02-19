@@ -75,7 +75,7 @@ const Register = () => {
 
 
     return ( 
-        <div>
+        <div className="login_register">
             <UsernamePassword
                 headline="Register"
                 buttonName="Register"

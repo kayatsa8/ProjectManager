@@ -1,0 +1,47 @@
+.edit_form{
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.back_edit_project{
+    background-color: rgb(171, 209, 244);
+    font-size: 20px;
+    display: block;
+}
+
+.edit_form h1{
+    font-size: 80px;
+}
+
+.edit_form label{
+    display: block;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: left;
+    margin: 2%;
+}
+
+.edit_form input{
+    display: block;
+    margin: 0 auto;
+    font-size: 25px;
+    width: 100%;
+    margin: 2%;
+}
+
+.edit_form textarea{
+    display: block;
+    margin: 0 auto;
+    font-size: 25px;
+    width: 100%;
+    margin: 2%;
+    field-sizing: content;
+}
+
+.edit_form button{
+    font-size: 30px;
+    margin-top: 3%;
+    background-color: rgb(109, 255, 47);
+    border-radius: 8px;
+}

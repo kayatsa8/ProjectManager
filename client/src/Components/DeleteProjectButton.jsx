@@ -66,7 +66,7 @@ const DeleteProjectButton = ({username, projectName, projects}) => {
 
 
     return (
-        <button onClick={() => handleClick()}>Delete</button>
+        <button className="delete" onClick={() => handleClick()}>Delete</button>
     );
 }
  

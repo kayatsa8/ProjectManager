@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './Screens/Login';
 import Register from './Screens/Register';
-import NotFound from './Screens/NotImplemented';
+import NotFound from './Screens/NotFound';
 import HomePage from './Screens/HomePage';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

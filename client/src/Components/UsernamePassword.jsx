@@ -1,4 +1,5 @@
 import { useState } from "react";
+import '../css/login_register.css'
 
 const UsernamePassword = ({headline, buttonName, onButtonPressed}) => {
     const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ const UsernamePassword = ({headline, buttonName, onButtonPressed}) => {
 
 
     return (
-        <div>
+        <div className="user_password">
             <h1>{headline}</h1>
             <form onSubmit={handleSubmit}>
                 <label>Username:</label>

@@ -68,15 +68,15 @@ const Login = () => {
 
 
     return (
-        <div>
+        <div className="login_register">
             <UsernamePassword 
                 headline="Login"
                 buttonName="Login"
                 onButtonPressed={(username, password) => onButtonPressed(username, password)}
             />
-            <button onClick={handleRegisterButton}>Register</button>
+            <button className="toRegister" onClick={handleRegisterButton}>Register</button>
 
-            {isPending && <div>pending...</div>}
+            {isPending && <div className="login_pending">pending...</div>}
         </div>
     );
 }
