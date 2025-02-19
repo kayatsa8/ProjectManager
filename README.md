@@ -16,6 +16,19 @@ A web client, created with React.js, to support the server's functionality.
 Screenshots below.
 
 
+## How To Run
+* Server:
+    ```bash
+    cd Server
+    python -u API.py
+    ```
+* Client:
+    ```bash
+    cd client
+    npm run dev
+    ```
+
+
 ## Endpoints
 * Register User:
     ```bash
