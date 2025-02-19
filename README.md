@@ -180,6 +180,7 @@ Screenshots below.
         "projectName": string,
         "tools": string[]
     }
+    ```
 
 * Change Project Status:
     ```bash
@@ -191,3 +192,19 @@ Screenshots below.
         "username": string,
         "projectName": string
     }
+    ```
+<br>
+
+## Server Output
+The output of the server is always in the following format:
+
+```bash
+{
+    "value": [the requested value, assuming no exceptions were raised],
+    "error": [true if an exception was raised, false otherwise],
+    "message": [an error message, if an exception was raised]
+}
+```
+
+
+
